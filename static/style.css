@@ -1,0 +1,568 @@
+/* RESET BÁSICO: elimina márgenes y padding por defecto y unifica el box model */
+/* ---------- TOP BAR COMO AMAZON ---------- */
+
+/* Contenedor principal de la cabecera */
+.top-bar {
+  background-color: #222;
+  padding: 5px 15px 0;
+}
+  /* Logo tipo Amazon (puedes cambiar texto o imagen luego) */
+.logo {
+  width: 90px;      /* antes 100px, ahora un 20% más pequeño */
+  height: auto;
+  max-height: 70px; /* opcional, para limitar altura */
+}
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* centra todo el bloque */
+  flex-wrap: wrap;
+  gap: 20px;                 /* espacio entre logo, título, búsqueda y user-options */
+}
+
+
+.site-title {
+  text-align: center;
+  flex: 0;               /* opcional, para asegurarte de que no crezca */
+  margin: 0 20px;        /* separadores laterales fijos */
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: white;
+}
+  /* Primera fila: logo, búsqueda, opciones usuario */ 
+  
+  .logo:hover {
+    transform: scale(1.07);
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+}
+
+header img {
+  width: 50px; /* Ajusta según el tamaño que necesites */
+  height: auto; /* Mantiene la proporción */
+  max-height: 150px; /* Limita la altura */
+}
+  /* Área de búsqueda */
+.search-area {
+  display: flex;
+  align-items: center;
+  width: 600px;       /* tu ancho deseado */
+  max-width: 80vw;
+  margin: 0 auto;
+  gap: 0;             /* ya no necesitamos gap: lo haremos con border-radius */
+}
+
+.search-area select,
+.search-area input,
+.search-area button {
+  height: 40px;           /* fija una altura común */
+  box-sizing: border-box; /* incluye padding en el height */
+  border: none;
+  font-size: 1rem;
+}
+.search-area select {
+  width: 100px;      /* aquí ajustas el ancho del dropdown */
+  height: 40px;
+  border-radius: 4px 0 0 4px;
+  padding: 0 8px;
+}
+.search-area button {
+  width: 70px;            /* o el ancho que quieras para el icono */
+  border-radius: 0 4px 4px 0;
+  background: #6e6e6e;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.search-area button svg {
+  width: 20px;
+  height: 20px;
+}
+.search-area input {   /* AJUSTE DE UBICACION TEXTO DENTRO DE BARRA DE BUSQUEDA */
+  flex-grow: 1;
+  font-size: 18px; /* Cambia este valor para modificar el tamaño de letra */
+  border: none;
+  padding: 0 12px;     /* 12px a izquierda y derecha */
+  box-sizing: border-box; /* para que el padding no aumente el ancho total */
+  }
+
+  /* 2) Título encima de la búsqueda */
+.search-title {
+  margin: 0 0 8px;               /* Solo separa del input */
+  font-size: 3rem;
+  color: #fff;
+}
+  
+  /* Opciones del usuario: ubicación, cuenta, carrito, etc */
+.user-options {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 20px;  /* separa la barra del botón de usuario */
+  margin-top: 40px; /* añade espacio extra arriba */
+  }
+
+.user-options .account,
+.user-options .returns,
+.user-options .cart {
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: center;
+}
+.user-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.user-icon:hover {
+  background-color:rgba(133, 133, 133, 0.8);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.user-options .returns:hover{
+  background-color: rgba(133, 133, 133, 0.8);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.user-options .cart:hover{
+  background-color: rgba(94, 93, 93, 0.8);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.user-options div {
+  text-align: left;
+  cursor: pointer;
+  padding: 5px 10px; /* Espacio interno en los botones */
+  transition: all 0.1s ease;
+}
+
+.user-btn {
+  display: flex;               /* Alinea icono y texto en fila */
+  align-items: center;         /* Centra verticalmente */
+  gap: 8px;                    /* Espacio entre icono y texto */
+  cursor: pointer;             /* Indica que es clicable */
+  color: white;                /* Texto blanco */
+  font-size: 0.9rem;           /* Mismo tamaño que antes */
+  text-align: left;            /* Texto alineado a la izquierda */
+}
+
+.user-btn .user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.user-btn .user-text {
+  line-height: 1.1;            /* Ajusta separación de líneas */
+}
+
+/* Hover igual que antes */
+.user-btn:hover {
+  background-color: rgba(133,133,133,0.8);
+  box-shadow: 0 0 8px rgba(255,255,255,0.6);
+  border-radius: 6px;
+}
+
+  /* Segunda fila: barra de navegación horizontal */
+  
+  .bottom-nav {
+    width: 100%;                 /* Asegura ancho completo */
+    background-color: #2e425c;   /* Color de fondo */
+    display: flex;
+    justify-content: flex-start;     /* Centra enlaces; usa flex-start/flex-end si prefieres */
+    flex-wrap: wrap;
+    gap: 15px;
+    font-family: 'Arial', sans-serif; /* Fuente de los enlaces */
+    font-size: 1rem;             /* Tamaño de letra (1rem = 16px) */
+  }
+  .bottom-nav a {
+    color: #fff;                 /* Color del texto */
+    font-weight: bold;
+    text-decoration: none;
+    padding: 6px 12px;           /* Espacio interno */
+    border-radius: 4px;
+    transition: background 0.3s;
+    margin-top: 10px;            /* Baja la barra 10px desde el top-row */
+}
+  .bottom-nav a:hover {
+    background-color: #37475a;
+  }
+  
+* {
+    margin: 0;            /* Quita márgenes por defecto */
+    padding: 0;           /* Quita padding por defecto */
+    box-sizing: border-box; /* Incluye padding y border en el ancho/alto */
+  }
+  
+  /* ESTILOS GLOBALES */
+  body {
+    font-family: Arial, sans-serif; /* Fuente legible y sin serifas */
+    background-color: #dbeafe;       /* Fondo azul pastel */
+    color: #ffffff;                     /* Color de texto principal (gris oscuro) */
+  }
+  
+  /* HEADER: barra superior */
+  .header {
+    display: flex;                   /* Layout flexible para alinear hijos */
+    align-items: center;             /* Centra verticalmente los elementos */
+    justify-content: space-between;  /* Separa logo, búsqueda y enlaces */
+    background-color: #1e3a8a;       /* Fondo azul oscuro */
+    padding: 10px 10px;              /* Espacio interno arriba/abajo y laterales */
+    color: white;                    /* Texto blanco */
+  }
+  
+  /* Logo dentro del header */
+  .header .logo {
+    font-size: 1.5rem;   /* Tamaño de letra 1.5 veces el tamaño base */
+    font-weight: bold;   /* Negrita */
+  }
+  
+  /* Contenedor de la barra de búsqueda */
+  .search-bar {
+    display: flex;       /* Para que input y botón queden alineados */
+  }
+  
+  /* Campo de texto de búsqueda */
+  .search-bar input {
+    padding: 6px 10px;                       /* Espacio interno del input */
+    border: none;                            /* Sin borde */
+    border-radius: 4px 0 0 4px;              /* Esquinas redondeadas solo a la izquierda */
+    width: 300px;                            /* Ancho fijo */
+  }
+  
+  /* Botón de la búsqueda */
+  .search-bar button {
+    padding: 6px 6px;                       /* Espacio interno */
+    border: none;                            /* Sin borde */
+    background-color: #f3f4f6;               /* Fondo claro */
+    border-radius: 0 4px 4px 0;              /* Esquinas redondeadas solo a la derecha */
+    cursor: pointer;                         /* Cursor de mano al pasar el ratón */
+  }
+  
+  /* Enlaces de navegación en el header */
+  .nav-links a {
+    margin-left: 200px;       /* Separación entre enlaces */
+    color: white;            /* Color blanco */
+    text-decoration: none;   /* Sin subrayado */
+  }
+  
+  /* SECCIÓN BANNER: área destacada */
+  .banner {
+    background-color: #fde68a;  /* Fondo amarillo suave */
+    color: #1e3a8a;             /* Texto azul oscuro */
+    text-align: center;         /* Centra el texto */
+    padding: 60px 20px;         /* Espacio interno grande arriba/abajo y lateral */
+    font-size: 2rem;            /* Texto grande */
+    font-weight: bold;          /* Negrita */
+  }
+  
+  /* CONTENEDOR DE TARJETAS */
+  .cards-container {
+    display: flex;              /* Flexbox para tarjetas */
+    flex-wrap: wrap;            /* Permite que las tarjetas pasen a la siguiente línea */
+    justify-content: space-around; /* Espacio uniforme alrededor de cada tarjeta */
+    padding: 30px;              /* Espacio interno del contenedor */
+  }
+  
+  /* CADA TARJETA */
+  .card {
+    background-color: white;                     /* Fondo blanco */
+    width: 22%;                                  /* Ancho relativo al contenedor */
+    min-width: 200px;                            /* Ancho mínimo para pantallas pequeñas */
+    margin: 10px;                                /* Margen alrededor de cada tarjeta */
+    padding: 20px;                               /* Espacio interno */
+    border-radius: 10px;                         /* Esquinas redondeadas */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);        /* Sombra suave */
+    text-align: center;                          /* Centra el texto dentro */
+    font-weight: bold;                           /* Negrita */
+  }
+
+.modal {
+  /* Oculto por defecto */
+  display: none;
+  /* Fíjalo al centro de la pantalla */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    /* Tamaño y estilo */
+  max-width: 400px; /* ancho ventana usuario */
+  max-height: 75vh;/* alto ventana usuario */
+  height: 80%; 
+  width: 80%;
+  background: rgba(26, 26, 26, 0.95);
+  padding: 25px;
+  border-radius: 25px;
+  color: white;
+  z-index: 1000;
+  overflow-y: auto;
+  overflow-x: hidden;
+  justify-content: center;  
+}
+
+.modal *,
+.modal-content *{
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.modal-content {
+  display: flex;
+  flex-direction: column;  /* Apila hijos verticalmente */
+  gap: 15px;               /* Espacio uniforme entre cada hijo */
+  padding: 30px 20px;
+  max-width: 100%;
+  width: 100%;
+  align-content: center;
+   /* … */
+}
+
+.modal-content input {   /* tamaños y modificaciones casillas de correo y contraseña */
+  width: 100%;            /* Ancho: 80% del contenedor .modal-content */
+  max-width: 700px;      /* No crecerá más de 1000px */
+  padding: 15px;         /* Espacio inteSrno: 20px arriba/abajo y 20px izq/der */
+  border: none;          /* Sin borde */
+  border-radius: 10px;   /* Esquinas redondeadas de 10px */
+  background: #333333;   /* Fondo oscuro para el input */
+  color: white;          /* Texto blanco dentro del input */
+  font-size: 0.8rem;
+}
+
+.modal-content p { /* Ajusta este valor según el tamaño que desees  inicio de sesion*/
+    font-size: 0.8rem;
+    text-align: center;
+    max-width: 50%;
+    
+}
+
+.modal-content h2 {  /* tamaño letras del titulo ventana usuario */ 
+  margin: 0;
+  font-size: 1.6rem;
+  text-align: center;
+  font-weight: 900; 
+  margin-bottom: 5px;
+}
+
+.forgot-password {
+    color: #eeff009a; /* Cambia este código por el color que desees */
+    font-weight: bold; /* Hace que la letra sea más gruesa */
+    text-decoration: none; /* Evita que tenga subrayado */
+    
+}
+
+.social-login {  /* VENTANA USUARIO BOTONES GMAIL, FACEBOOK, ETC */
+  margin-top: 10px;
+  text-align: center;
+}
+
+.social-login {
+  width: 100%;           /* Ocupa todo el ancho de .modal-content */
+  max-width: 700px;      /* Igual que los inputs y login-btn */
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* Centra los hijos (el <p> y el botón) */
+  margin-top: 20px;
+}
+.social-login {
+  display: flex;
+  justify-content: center; /* centra el botón */
+}
+.social-login .social-btn {
+  flex: 0 0 45%;           /* ocupa 45% del contenedor */
+  max-width: 400px;        /* tope de anchura, ajusta según necesites */
+  padding: 7px 0;         /* misma altura que .btn-auth */
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  background: #db4437;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.social-login .social-btn:hover {
+  background: #c33d36;
+}
+
+.forgot-password:hover {
+    color: #ffa500; /* Cambia de color cuando pasas el cursor */
+    text-decoration: underline; /* Opcional: agrega subrayado al pasar el cursor */
+}
+.close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 3rem;
+  cursor: pointer;
+  color: #6e6e6e;
+}
+
+.modal img {
+    max-width: 100px;  /* Ajusta este valor según el tamaño deseado */
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    display: block; /* Centra la imagen */
+    margin: 0 auto;
+}
+
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 0.8rem;
+  }
+  
+  .options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+  }
+  
+  .options a {
+    color: #ffcc00;
+    text-decoration: none;
+  }
+  
+  .options a:hover {
+    text-decoration: underline;
+  }
+.content {
+    padding: 20px;
+    background-color: #222;
+}
+.category {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.category h2 {
+  color: white;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.botones-auth {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* Estilo común */
+.btn-auth {
+  flex: 1;                 /* Ocupa todo el espacio disponible */
+  max-width: 45%;          /* Hasta 45% cada uno */
+  padding: 12px 0;         /* Altura consistente */
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Login */
+.btn-login {
+  background-color: #f7de04;
+  color: #3f3f3f;
+}
+.btn-login:hover {
+  background-color: #d4cd00;
+}
+
+/* Registrarse */
+.btn-registrarse {
+  background-color: #ddd;
+  color: #333;
+}
+.btn-registrarse:hover {
+  background-color: #ccc;
+}
+
+/* CONTENIDO CONTACTANOS */
+.contact-section {
+  background-color: #fff;
+  color: #222;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.contact-intro h2 {
+  font-size: 2.5rem;
+  color: #1e3a8a;
+  margin-bottom: 12px;
+}
+
+.contact-intro p {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+.social-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.social-btn i {
+  font-size: 1.2rem;
+}
+
+/* Estilos específicos */
+.fb {
+  background-color: #1877f2;
+}
+
+.wa {
+  background-color: #25d366;
+}
+
+.ig {
+  background: radial-gradient(circle at 30% 107%,
+    #fdf497 0%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+}
+
+/* Hover effect */
+.social-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+}
+
+
+  /* FOOTER: pie de página */
+.footer {
+  background-color: #1e3a8a;   /* Fondo azul oscuro (igual que el header) */
+  color: white;                /* Texto blanco */
+  text-align: center;          /* Centra el texto */
+  padding: 15px;               /* Espacio interno */
+  margin-top: 20px;            /* Separación arriba respecto al contenido */
+}

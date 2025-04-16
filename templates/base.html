@@ -1,0 +1,95 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Mi Tienda{% endblock %}</title>
+  <!-- Links a tus archivos CSS y JS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+
+<body>
+
+  <!-- ========== ENCABEZADO COMÚN ========== -->
+  <header class="top-bar">
+    <div class="top-row">
+      <a href="{{ url_for('index') }}">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
+      </a>
+      <h1 class="site-title">Bienvenido a KAJA</h1>
+      <div class="search-area">
+        <select onchange="if(this.value) window.location.href=this.value">
+          <option value="">Todos</option>>
+            <option value="{{ url_for('brochas') }}">Brochas</option>
+            <option value="{{ url_for('labiales') }}">Labiales</option>
+            <option value="{{ url_for('pestaninas') }}">Pestañinas</option>
+            <option value="{{ url_for('rubores') }}">Rubores</option>
+            <option value="{{ url_for('cuidado_capilar') }}">Cuidado capilar</option>
+            <option value="{{ url_for('bases') }}">Bases</option>
+            <option value="{{ url_for('correctores') }}">Correctores</option>
+        </select>
+          <input type="text" placeholder="Buscar en MiTienda">
+          <button type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+               viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          </button>
+      </div>
+      <div class="user-options">
+        <div id="loginBtn" class="user-btn">
+          <img src="{{ url_for('static', filename='img/user-icon.jpg') }}" alt="User Icon" class="user-icon">
+          <span class="user-text">Usuario<br><strong>Inicio Sesión</strong></span>
+        </div>
+        <div class="returns">Devoluciones<br><strong>y Pedidos</strong></div>
+        <div class="cart">🛒 Carrito</div>
+      </div>
+    </div>
+    <nav class="bottom-nav">
+      <!-- Ajustamos los enlaces para que lleven a sus rutas -->
+      <a href="#">☰ CATEGORIA</a>
+      <a href="{{ url_for('popular') }}">Popular</a>
+      <a href="{{ url_for('ofertas') }}">Ofertas del Día</a>
+      <a href="{{ url_for('envios') }}">Tipos de Envíos</a>
+      <a href="{{ url_for('contacto') }}">Contactanos</a>
+    </nav>
+  </header>
+  <!-- ========== FIN ENCABEZADO ========== -->
+
+  <!-- Modal de inicio de sesión (puedes dejarlo fijo aquí si se aplica a todas las páginas) -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Manga 1">
+      <h2>Bienvenido de nuevo!</h2>
+      <input type="email" placeholder="Correo">
+      <input type="password" placeholder="Contraseña">
+      <div class="options">
+        <label><input type="checkbox"> Recordarme</label>
+        <a href="#">Olvide mi contraseña</a>
+      </div>
+      <div class="botones-auth">
+        <button class="btn-auth btn-registrarse">Registrarse</button>
+        <button class="btn-auth btn-login">Login</button>
+      </div>
+      <div class="social-login">
+        <p>O inicia sesión con:</p>
+        <button class="social-btn gmail">Continuar con Gmail</button>
+      </div>
+    </div>
+  </div>
+  <!-- ========== CONTENIDO ESPECÍFICO DE CADA PÁGINA ========== -->
+  {% block content %}
+  {% endblock %}
+  <!-- ========== FOOTER COMÚN ========== -->
+  <footer class="footer">
+    <p>© 2025 MiTienda</p>
+  </footer>
+</body>
+</html>
