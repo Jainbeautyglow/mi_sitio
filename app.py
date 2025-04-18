@@ -1,62 +1,64 @@
 from flask import render_template
-from models import create_app, db
 from flask_migrate import Migrate
-from models import Product
+from models import create_app, db, Product
 
-# Creamos la app usando tu factory
-app = create_app()
-migrate = Migrate(app, db)
-# Ruta de inicio: carga tu template index.html
-@app.route('/categoria/<nombre>')
+# Crear la aplicación con el factory
+env_app = create_app()
+migrate = Migrate(env_app, db)
+
+# Ruta principal: muestra todos los productos
+@env_app.route('/')
+def index():
+    productos = Product.query.all()
+    return render_template('index.html', productos=productos)
+
+# Ruta genérica para filtrar por categoría
+@env_app.route('/categoria/<string:nombre>')
 def categoria(nombre):
-    # Filtrar productos por categoría
-    productos = Product.query.filter_by(categoria=nombre).all()
+    productos = Product.query.filter_by(category=nombre).all()
     return render_template('categoria.html', productos=productos, categoria=nombre)
 
-# Rutas para las categorías específicas
-@app.route('/categoria/popular')
-def popular():
-    return redirect(url_for('categoria', nombre='popular'))
-
-@app.route('/categoria/ofertas-del-dia')
-def ofertas():
-    return redirect(url_for('categoria', nombre='ofertas-del-dia'))
-
-@app.route('/categoria/tipos-de-envios')
-def envios():
-    return redirect(url_for('categoria', nombre='tipos-de-envios'))
-
-@app.route('/categoria/contactanos')
-def contacto():
-    return redirect(url_for('categoria', nombre='contactanos'))
-
-@app.route('/categoria/brochas')
+# Rutas estáticas: cada categoría y páginas especiales
+@env_app.route('/brochas')
 def brochas():
-    return redirect(url_for('categoria', nombre='brochas'))
+    return render_template('brochas.html')
 
-@app.route('/categoria/labiales')
+@env_app.route('/labiales')
 def labiales():
-    return redirect(url_for('categoria', nombre='labiales'))
+    return render_template('labiales.html')
 
-@app.route('/categoria/pestaninas')
-def pestaninas():
-    return redirect(url_for('categoria', nombre='pestaninas'))
-
-@app.route('/categoria/rubores')
+@env_app.route('/rubores')
 def rubores():
-    return redirect(url_for('categoria', nombre='rubores'))
+    return render_template('rubores.html')
 
-@app.route('/categoria/cuidado_capilar')
-def cuidado_capilar():
-    return redirect(url_for('categoria', nombre='cuidado_capilar'))
-
-@app.route('/categoria/bases')
-def bases():
-    return redirect(url_for('categoria', nombre='bases'))
-
-@app.route('/categoria/correctores')
+@env_app.route('/correctores')
 def correctores():
-    return redirect(url_for('categoria', nombre='correctores'))
+    return render_template('correctores.html')
 
+@env_app.route('/cuidado_capilar')
+def cuidado_capilar():
+    return render_template('cuidado_capilar.html')
+
+@env_app.route('/envios')
+def envios():
+    return render_template('envios.html')
+
+@env_app.route('/ofertas')
+def ofertas():
+    return render_template('ofertas.html')
+
+@env_app.route('/pestaninas')
+def pestaninas():
+    return render_template('pestañinas.html')
+
+@env_app.route('/popular')
+def popular():
+    return render_template('popular.html')
+
+@env_app.route('/contacto')
+def contacto():
+    return render_template('contacto.html')
+
+# Arrancar la aplicación
 if __name__ == '__main__':
-    app.run(debug=True)
+    env_app.run(debug=True)
