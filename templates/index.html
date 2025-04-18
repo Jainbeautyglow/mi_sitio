@@ -13,15 +13,31 @@
 <h2>Lista de productos</h2>
 <section class="categorias">
   <h2>Categorías</h2>
-  <div class="categorias">
-    <a href="{{ url_for('categoria', nombre='brochas') }}" class="categoria">Brochas</a>
-    <a href="{{ url_for('categoria', nombre='bases') }}" class="categoria">Bases</a>
-    <a href="{{ url_for('categoria', nombre='labiales') }}" class="categoria">Labiales</a>
-    <a href="{{ url_for('categoria', nombre='pestañinas') }}" class="categoria">Pestañinas</a>
-    <a href="{{ url_for('categoria', nombre='polvos') }}" class="categoria">Polvos</a>
-    <a href="{{ url_for('categoria', nombre='sombras') }}" class="categoria">Sombras</a>
-  </div>
-</section>
+  <section class="categories-panel">
+    <a href="{{ url_for('categoria', nombre='brochas') }}" class="category-card">
+      <img src="{{ url_for('static', filename='img/brochas.jpg') }}" alt="Brochas de maquillaje">
+      <h3>Brochas</h3>
+      <span class="cta">Ver más</span>
+    </a>
+  
+    <a href="{{ url_for('categoria', nombre='pestaninas') }}" class="category-card">
+      <img src="{{ url_for('static', filename='img/pestaninas.jpg') }}" alt="Pestañinas y máscaras">
+      <h3>Pestañinas</h3>
+      <span class="cta">Ver más</span>
+    </a>
+  
+    <a href="{{ url_for('categoria', nombre='bases') }}" class="category-card">
+      <img src="{{ url_for('static', filename='img/bases.jpg') }}" alt="Bases de maquillaje">
+      <h3>Bases</h3>
+      <span class="cta">Ver más</span>
+    </a>
+  
+    <a href="{{ url_for('categoria', nombre='labiales') }}" class="category-card">
+      <img src="{{ url_for('static', filename='img/labiales.jpg') }}" alt="Labiales y barras de labios">
+      <h3>Labiales</h3>
+      <span class="cta">Ver más</span>
+    </a>
+  </section>
 <ul>
   {% for producto in productos %}
     <li>
