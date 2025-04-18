@@ -13,15 +13,14 @@
 <h2>Lista de productos</h2>
 <section class="categorias">
   <h2>Categorías</h2>
-  <div class="contenedor-categorias">
-      <div class="categorias">
-        <a href="{{ url_for('categoria', nombre='brochas') }}" class="categoria">Brochas</a>
-        <a href="{{ url_for('categoria', nombre='bases') }}" class="categoria">Bases</a>
-        <a href="{{ url_for('categoria', nombre='labiales') }}" class="categoria">Labiales</a>
-        <a href="{{ url_for('categoria', nombre='pestañinas') }}" class="categoria">Pestañinas</a>
-        <a href="{{ url_for('categoria', nombre='polvos') }}" class="categoria">Polvos</a>
-        <a href="{{ url_for('categoria', nombre='sombras') }}" class="categoria">Sombras</a>
-      </div>
+  <div class="categorias">
+    <a href="{{ url_for('categoria', nombre='brochas') }}" class="categoria">Brochas</a>
+    <a href="{{ url_for('categoria', nombre='bases') }}" class="categoria">Bases</a>
+    <a href="{{ url_for('categoria', nombre='labiales') }}" class="categoria">Labiales</a>
+    <a href="{{ url_for('categoria', nombre='pestañinas') }}" class="categoria">Pestañinas</a>
+    <a href="{{ url_for('categoria', nombre='polvos') }}" class="categoria">Polvos</a>
+    <a href="{{ url_for('categoria', nombre='sombras') }}" class="categoria">Sombras</a>
+  </div>
 </section>
 <ul>
   {% for producto in productos %}
