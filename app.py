@@ -7,58 +7,56 @@ from models import Product
 app = create_app()
 migrate = Migrate(app, db)
 # Ruta de inicio: carga tu template index.html
-@app.route('/')
-def index():
-    productos = Product.query.all()
-    return render_template('index.html', productos=productos)
-# Ruta para la sección "Popular"
-@app.route('/popular')
+@app.route('/categoria/<nombre>')
+def categoria(nombre):
+    # Filtrar productos por categoría
+    productos = Product.query.filter_by(categoria=nombre).all()
+    return render_template('categoria.html', productos=productos, categoria=nombre)
+
+# Rutas para las categorías específicas
+@app.route('/categoria/popular')
 def popular():
-    return render_template('popular.html')
-                           
-# Ruta para la sección "Ofertas del Día"
-@app.route('/ofertas-del-dia')
+    return redirect(url_for('categoria', nombre='popular'))
+
+@app.route('/categoria/ofertas-del-dia')
 def ofertas():
-    return render_template('ofertas.html')
+    return redirect(url_for('categoria', nombre='ofertas-del-dia'))
 
-# Ruta para la sección "Tipos de Envíos"
-@app.route('/tipos-de-envios')
+@app.route('/categoria/tipos-de-envios')
 def envios():
-    return render_template('envios.html')
+    return redirect(url_for('categoria', nombre='tipos-de-envios'))
 
-# Ruta para la sección "Contactanos"
-@app.route('/contactanos')
+@app.route('/categoria/contactanos')
 def contacto():
-    return render_template('contacto.html')
+    return redirect(url_for('categoria', nombre='contactanos'))
 
-@app.route('/brochas')
+@app.route('/categoria/brochas')
 def brochas():
-    return render_template('brochas.html')
+    return redirect(url_for('categoria', nombre='brochas'))
 
-@app.route('/labiales')
+@app.route('/categoria/labiales')
 def labiales():
-    return render_template('labiales.html')
+    return redirect(url_for('categoria', nombre='labiales'))
 
-@app.route('/pestaninas')
+@app.route('/categoria/pestaninas')
 def pestaninas():
-    return render_template('pestaninas.html')
+    return redirect(url_for('categoria', nombre='pestaninas'))
 
-@app.route('/rubores')
+@app.route('/categoria/rubores')
 def rubores():
-    return render_template('rubores.html')
+    return redirect(url_for('categoria', nombre='rubores'))
 
-@app.route('/cuidado_capilar')
+@app.route('/categoria/cuidado_capilar')
 def cuidado_capilar():
-    return render_template('cuidado_capilar.html')
+    return redirect(url_for('categoria', nombre='cuidado_capilar'))
 
-@app.route('/bases')
+@app.route('/categoria/bases')
 def bases():
-    return render_template('bases.html')
+    return redirect(url_for('categoria', nombre='bases'))
 
-@app.route('/correctores')
+@app.route('/categoria/correctores')
 def correctores():
-    return render_template('correctores.html')
-
+    return redirect(url_for('categoria', nombre='correctores'))
 
 if __name__ == '__main__':
     app.run(debug=True)
