@@ -1,0 +1,14 @@
+<!-- templates/bases.html -->
+{% extends 'base.html' %}
+{% block title %}Bases{% endblock %}
+
+{% block content %}
+  <h2>Bases</h2>
+  <ul>
+    {% for producto in productos %}
+      <li><strong>{{ producto.name }}</strong> – {{ producto.price }} USD</li>
+    {% else %}
+      <li>No hay bases disponibles.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

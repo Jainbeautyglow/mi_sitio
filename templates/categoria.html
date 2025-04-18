@@ -1,0 +1,5 @@
+<h1>{{ categoria | capitalize }}</h1>
+
+{% for producto in productos %}
+  <div>{{ producto.nombre }} - ${{ producto.precio }}</div>
+{% endfor %}
