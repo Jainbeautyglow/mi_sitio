@@ -1,10 +1,11 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+import os
 
 # Configuración de la aplicación
 env_app = Flask(__name__)
-env_app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///productos.db'
+env_app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///productos.db')
 env_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Inicialización de extensiones
