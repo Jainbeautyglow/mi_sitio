@@ -7,15 +7,37 @@
 
 <h2>Lista de productos</h2>
   <section class="categorias">
-  <h2>Categorías</h2>
-  <section class="categorias">
     <h2>Categorías</h2>
     <div class="contenedor-categorias">
-      <a href="{{ url_for('categoria', nombre='brochas') }}">Brochas</a>
-      <a href="{{ url_for('categoria', nombre='labiales') }}">Labiales</a>
-      <a href="{{ url_for('categoria', nombre='rubores') }}">Rubores</a>
+      <a href="{{ url_for('categoria', nombre='brochas') }}" class="categoria">
+        <img src="{{ url_for('static', filename='img/brochas.jpg') }}" alt="Brochas">
+        <h3>Brochas</h3>
+      </a>
+      <a href="{{ url_for('categoria', nombre='labiales') }}" class="categoria">
+        <img src="{{ url_for('static', filename='img/labiales.jpg') }}" alt="Labiales">
+        <h3>Labiales</h3>
+      </a>
+      <a href="{{ url_for('categoria', nombre='rubores') }}" class="categoria">
+        <img src="{{ url_for('static', filename='img/rubores.jpg') }}" alt="Rubores">
+        <h3>Rubores</h3>
+      </a>
+      <a href="{{ url_for('categoria', nombre='pestañinas') }}" class="categoria">
+        <img src="{{ url_for('static', filename='img/pestañinas.jpg') }}" alt="Pestañinas">
+        <h3>Pestañinas</h3>
+      </a>
+      <a href="{{ url_for('categoria', nombre='bases') }}" class="categoria">
+        <img src="{{ url_for('static', filename='img/bases.jpg') }}" alt="Bases">
+        <h3>Bases</h3>
+      </a>
+      <a href="{{ url_for('categoria', nombre='Correctores') }}" class="categoria">
+        <img src="{{ url_for('static', filename='img/correctores.jpg') }}" alt="Correctores">
+        <h3>Correctores</h3>
+      </a>
+      <a href="{{ url_for('categoria', nombre='cuidado capilar') }}" class="categoria">
+        <img src="{{ url_for('static', filename='img/cuidado capilar.jpg') }}" alt="Cuidado Capilar">
+        <h3>Cuidado Capilar</h3>
+      </a>
     </div>
-  </section>
 
 <ul>
   {% for producto in productos %}

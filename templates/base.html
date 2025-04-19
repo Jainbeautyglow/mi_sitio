@@ -85,7 +85,7 @@
     </div>
   </div>
   <!-- ========== CONTENIDO ESPECÍFICO DE CADA PÁGINA ========== -->
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   {% block content %}
   {% endblock %}
   <!-- ========== FOOTER COMÚN ========== -->

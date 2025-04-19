@@ -1,5 +1,14 @@
-<h1>{{ categoria | capitalize }}</h1>
+{% extends 'base.html' %}
 
-{% for producto in productos %}
-  <div>{{ producto.nombre }} - ${{ producto.precio }}</div>
-{% endfor %}
+{% block title %}Categoría: {{ categoria }}{% endblock %}
+
+{% block content %}
+  <h2>Productos en la categoría: {{ categoria }}</h2>
+  <ul>
+    {% for producto in products %}
+      <li><strong>{{ producto.name }}</strong> - {{ producto.price }} USD</li>
+    {% else %}
+      <li>No hay productos en esta categoría.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
