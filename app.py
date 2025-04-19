@@ -77,6 +77,11 @@ def envios():
 def contacto():
     return render_template('contacto.html')
 
+@env_app.route('/categoria/<nombre>')
+def categoria(nombre):
+    productos = Product.query.filter_by(type=nombre).all()
+    return render_template('categoria.html', categoria=nombre, products=productos)
+
 if __name__ == '__main__':
     # Crear tablas si no existen
     with env_app.app_context():
