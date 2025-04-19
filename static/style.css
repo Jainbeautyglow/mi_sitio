@@ -33,7 +33,7 @@
   
   .logo:hover {
     transform: scale(1.07);
-    box-shadow: 0px 0px 10px #cb8587;
+    box-shadow: 0px 0px 10px #eac0c2;
     border-radius: 20px;
 }
 
@@ -69,7 +69,7 @@ header img {
 .search-area button {
   width: 70px;            /* o el ancho que quieras para el icono */
   border-radius: 0 4px 4px 0;
-  background: #6e6e6e;
+  background: #cb8587; /* Color del fondo de la lupa */
   color: white;
   display: flex;
   align-items: center;
@@ -80,9 +80,13 @@ header img {
   width: 20px;
   height: 20px;
 }
+.search-area button:hover{
+  background-color:#d89599;
+  box-shadow: 0 0 8px #eac0c2;
+}
 .search-area input {   /* AJUSTE DE UBICACION TEXTO DENTRO DE BARRA DE BUSQUEDA */
   flex-grow: 1;
-  font-size: 18px; /* Cambia este valor para modificar el tamaño de letra */
+  font-size: 12px; /* Cambia este valor para modificar el tamaño de letra */
   border: none;
   padding: 0 12px;     /* 12px a izquierda y derecha */
   box-sizing: border-box; /* para que el padding no aumente el ancho total */
@@ -122,25 +126,27 @@ header img {
 }
 
 .user-icon:hover {
-  background-color:rgba(133, 133, 133, 0.8);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  background-color:#eac0c2;
+  box-shadow: 0 0 8px #eac0c2;
 }
 
 .user-options .returns:hover{
-  background-color: rgba(133, 133, 133, 0.8);
+  background-color: #eac0c2;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  border-radius: 10%;
 }
 
 .user-options .cart:hover{
-  background-color: rgba(94, 93, 93, 0.8);
+  background-color: #eac0c2;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+  border-radius: 10%;
 }
 
 .user-options div {
   text-align: left;
   cursor: pointer;
   padding: 5px 10px; /* Espacio interno en los botones */
-  transition: all 0.1s ease;
+  transition: all 0.2s ease;
 }
 
 .user-btn {
@@ -166,7 +172,7 @@ header img {
 
 /* Hover igual que antes */
 .user-btn:hover {
-  background-color:#cb8587;
+  background-color:#eac0c2;
   box-shadow: 0 0 8px rgba(255,255,255,0.6);
   border-radius: 6px;
 }
@@ -194,7 +200,7 @@ header img {
     margin-top: 3px;            /* Baja la barra 10px desde el top-row */
 }
   .bottom-nav a:hover {
-    background-color: #cb8560;
+    background-color: #d89a9c;
   }
   
 * {
@@ -505,7 +511,7 @@ header img {
 
 .contact-intro h2 {
   font-size: 2.5rem;
-  color: #1e3a8a;
+  color: #cb8587;
   margin-bottom: 12px;
 }
 
@@ -613,7 +619,7 @@ header img {
 
   /* FOOTER: pie de página */
 .footer {
-  background-color: #1e3a8a;   /* Fondo azul oscuro (igual que el header) */
+  background-color: #cb8587;   /* Fondo azul oscuro (igual que el header) */
   color: white;                /* Texto blanco */
   text-align: center;          /* Centra el texto */
   padding: 15px;               /* Espacio interno */
