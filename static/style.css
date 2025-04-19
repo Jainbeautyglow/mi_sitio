@@ -4,13 +4,13 @@
 /* Contenedor principal de la cabecera */
 .top-bar {
   background-color: #f3d8d8;
-  padding: 5px 15px 0;
+  padding: 0px 15px 0;
 }
   /* Logo tipo Amazon (puedes cambiar texto o imagen luego) */
 .logo {
-  width: 90px;      /* antes 100px, ahora un 20% más pequeño */
+  width: 83px;      /* antes 100px, ahora un 20% más pequeño */
   height: auto;
-  max-height: 70px; /* opcional, para limitar altura */
+  max-height: 63px; /* opcional, para limitar altura */
 }
 .top-row {
   display: flex;
@@ -25,7 +25,7 @@
   text-align: center;
   flex: 0;               /* opcional, para asegurarte de que no crezca */
   margin: 0 20px;        /* separadores laterales fijos */
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 900;
   color: #cb8587;
 }
@@ -33,7 +33,7 @@
   
   .logo:hover {
     transform: scale(1.07);
-    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 10px #cb8587;
     border-radius: 20px;
 }
 
@@ -55,14 +55,14 @@ header img {
 .search-area select,
 .search-area input,
 .search-area button {
-  height: 40px;           /* fija una altura común */
+  height: 30px;           /* fija una altura común */
   box-sizing: border-box; /* incluye padding en el height */
   border: none;
   font-size: 1rem;
 }
 .search-area select {
   width: 100px;      /* aquí ajustas el ancho del dropdown */
-  height: 40px;
+  height: 30px;
   border-radius: 4px 0 0 4px;
   padding: 0 8px;
 }
@@ -91,7 +91,7 @@ header img {
   /* 2) Título encima de la búsqueda */
 .search-title {
   margin: 0 0 8px;               /* Solo separa del input */
-  font-size: 3rem;
+  font-size: 1rem;
   color: #fff;
 }
   
@@ -101,14 +101,15 @@ header img {
   align-items: center;
   gap: 15px;
   margin-left: 20px;  /* separa la barra del botón de usuario */
-  margin-top: 40px; /* añade espacio extra arriba */
+  margin-top: 30px; /* añade espacio extra arriba */
   }
 
 .user-options .account,
 .user-options .returns,
 .user-options .cart {
-  color: rgb(0, 0, 0);
-  font-size: 0.9rem;
+  color: #cb8587;
+  font-size: 0.8rem;
+  font-weight: 900;
   cursor: pointer;
   text-align: center;
 }
@@ -143,12 +144,13 @@ header img {
 }
 
 .user-btn {
-  display: flex;               /* Alinea icono y texto en fila */
+  display: flex;               /* Alinea icono y texto en fila ESTE ES EL USER COIN Y SU TEXTO  */
   align-items: center;         /* Centra verticalmente */
   gap: 8px;                    /* Espacio entre icono y texto */
   cursor: pointer;             /* Indica que es clicable */
-  color: rgb(0, 0, 0);                /* Texto blanco */
-  font-size: 0.9rem;           /* Mismo tamaño que antes */
+  color: #cb8587;                /* Texto blanco */
+  font-size: 0.8rem;           /* Mismo tamaño que antes */
+  font-weight: 900;
   text-align: left;            /* Texto alineado a la izquierda */
 }
 
@@ -164,7 +166,7 @@ header img {
 
 /* Hover igual que antes */
 .user-btn:hover {
-  background-color: rgba(133,133,133,0.8);
+  background-color:#cb8587;
   box-shadow: 0 0 8px rgba(255,255,255,0.6);
   border-radius: 6px;
 }
@@ -173,13 +175,14 @@ header img {
   
   .bottom-nav {
     width: 100%;                 /* Asegura ancho completo */
+    height: 5vh;
     background-color: #cb8587;   /* Color de fondo */
     display: flex;
     justify-content: flex-start;     /* Centra enlaces; usa flex-start/flex-end si prefieres */
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px;
     font-family: 'Arial', sans-serif; /* Fuente de los enlaces */
-    font-size: 1rem;             /* Tamaño de letra (1rem = 16px) */
+    font-size: 0.8rem;             /* Tamaño de letra (1rem = 16px) */
   }
   .bottom-nav a {
     color: #fff;                 /* Color del texto */
@@ -188,7 +191,7 @@ header img {
     padding: 6px 12px;           /* Espacio interno */
     border-radius: 4px;
     transition: background 0.3s;
-    margin-top: 10px;            /* Baja la barra 10px desde el top-row */
+    margin-top: 3px;            /* Baja la barra 10px desde el top-row */
 }
   .bottom-nav a:hover {
     background-color: #cb8560;
@@ -212,7 +215,7 @@ header img {
     display: flex;                   /* Layout flexible para alinear hijos */
     align-items: center;             /* Centra verticalmente los elementos */
     justify-content: space-between;  /* Separa logo, búsqueda y enlaces */
-    background-color: #1e3a8a;       /* Fondo azul oscuro */
+    background-color: #d6d4ad;       /* Fondo azul oscuro */
     padding: 10px 10px;              /* Espacio interno arriba/abajo y laterales */
     color: white;                    /* Texto blanco */
   }
@@ -296,10 +299,10 @@ header img {
   max-height: 75vh;/* alto ventana usuario */
   height: 80%; 
   width: 80%;
-  background: rgba(26, 26, 26, 0.95);
+  background: rgba(243, 216, 216, 0.95);
   padding: 25px;
   border-radius: 25px;
-  color: white;
+  color: #cb8587;
   z-index: 1000;
   overflow-y: auto;
   overflow-x: hidden;
@@ -314,8 +317,8 @@ header img {
 .modal-content {
   display: flex;
   flex-direction: column;  /* Apila hijos verticalmente */
-  gap: 15px;               /* Espacio uniforme entre cada hijo */
-  padding: 30px 20px;
+  gap: 10px;               /* Espacio uniforme entre cada hijo */
+  padding: 20x 10px;
   max-width: 100%;
   width: 100%;
   align-content: center;
@@ -328,8 +331,8 @@ header img {
   padding: 15px;         /* Espacio inteSrno: 20px arriba/abajo y 20px izq/der */
   border: none;          /* Sin borde */
   border-radius: 10px;   /* Esquinas redondeadas de 10px */
-  background: #333333;   /* Fondo oscuro para el input */
-  color: white;          /* Texto blanco dentro del input */
+  background: #ffffff;   /* Fondo oscuro para el input */
+  color: rgb(0, 0, 0);          /* Texto blanco dentro del input */
   font-size: 0.8rem;
 }
 
@@ -345,7 +348,7 @@ header img {
   font-size: 1.6rem;
   text-align: center;
   font-weight: 900; 
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 
 .forgot-password {
@@ -356,7 +359,7 @@ header img {
 }
 
 .social-login {  /* VENTANA USUARIO BOTONES GMAIL, FACEBOOK, ETC */
-  margin-top: 10px;
+  margin-top: 5px;
   text-align: center;
 }
 
@@ -426,12 +429,14 @@ header img {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: white;
+    color: #cb8587;
+    font-weight: 900;
   }
   
   .options a {
-    color: #ffcc00;
+    color: #cb8587;
     text-decoration: none;
+    font-weight: 900;
   }
   
   .options a:hover {
@@ -469,12 +474,12 @@ header img {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
 }
 
 /* Login */
 .btn-login {
-  background-color: #f7de04;
+  background-color: #cb8587;
   color: #3f3f3f;
 }
 .btn-login:hover {
@@ -483,7 +488,7 @@ header img {
 
 /* Registrarse */
 .btn-registrarse {
-  background-color: #ddd;
+  background-color: #ffffff;
   color: #333;
 }
 .btn-registrarse:hover {
