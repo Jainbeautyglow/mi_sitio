@@ -96,6 +96,7 @@ def categoria(nombre):
 def agregar_producto():
     if request.method == 'POST':
         name = request.form['name']
+        descripcion = request.form['descripcion']
         price = float(request.form['price'])
         product_type = request.form['type']
         image = request.files['image']
