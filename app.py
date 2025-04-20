@@ -4,7 +4,6 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 from flask import request, redirect, url_for
 from werkzeug.utils import secure_filename
-from app import db
 import uuid
 import os
 
@@ -118,7 +117,7 @@ def agregar_producto():
         else:
             image_url = None
 
-        nuevo_producto = Product(name=name, price=price, type=product_type, image_url=image_url)
+        nuevo_producto = Product(name=name, price=price, type=product_type, image_url=image_url, description=description)
         db.session.add(nuevo_producto)
         db.session.commit()
         return redirect(url_for('index'))
