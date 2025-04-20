@@ -5,13 +5,18 @@
     <title>Agregar Producto</title>
 </head>
 <body>
+    {% extends 'base.html' %}
+
+{% block title %}Mi Tienda - Inicio{% endblock %}
+
+{% block content %}
     <h1>Agregar Nuevo Producto</h1>
     
     <form action="/agregar_producto" method="POST" enctype="multipart/form-data">
         <label for="name">Nombre:</label><br>
         <input type="text" id="name" name="name" required><br><br>
-        <label for="name">Descripcion:</label><br>
-        <input type="text" id="description" name="description" required><br><br>
+        <label for="description">Descripción:</label><br>
+        <textarea name="description" id="description" rows="4" cols="50" required></textarea>
         <label for="price">Precio:</label><br>
         <input type="number" step="0.01" id="price" name="price" required><br><br>
 
