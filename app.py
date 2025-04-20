@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 from flask import request, redirect, url_for
 from werkzeug.utils import secure_filename
+from app import db
 import uuid
 import os
 
@@ -99,7 +100,7 @@ def agregar_producto():
 
     if password != os.getenv('ADMIN_PASSWORD'):
         return "Acceso denegado", 403
-        
+
     if request.method == 'POST':
         name = request.form['name']
         price = float(request.form['price'])
