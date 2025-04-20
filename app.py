@@ -27,6 +27,7 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     type = db.Column(db.String(50), nullable=False)
     image_url = db.Column(db.String(200))  # nuevo campo
+    description = db.Column(db.Text)
 
 # Ruta principal: lista todos los productos
 @app.route('/')
@@ -99,10 +100,11 @@ def agregar_producto():
         return "Acceso denegado", 403
     if request.method == 'POST':
         name = request.form['name']
-        descripcion = request.form['descripcion']
         price = float(request.form['price'])
         product_type = request.form['type']
         image = request.files['image']
+        description = request.form['description']
+        
 
         if image:
             filename = secure_filename(image.filename)
@@ -113,7 +115,7 @@ def agregar_producto():
         else:
             image_url = None
 
-        nuevo_producto = Product(name=name, descripcion=descripcion, price=price, type=product_type, image_url=image_url)
+        nuevo_producto = Product(name=name, price=price, type=product_type, image_url=image_url)
         db.session.add(nuevo_producto)
         db.session.commit()
         return redirect(url_for('index'))
