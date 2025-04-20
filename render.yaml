@@ -3,4 +3,4 @@ services:
     name: belleza-jainista
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:env_app"
+    startCommand: "gunicorn app:app"
