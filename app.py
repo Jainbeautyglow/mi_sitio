@@ -95,7 +95,7 @@ def categoria(nombre):
 
 @app.route('/agregar_producto', methods=['GET', 'POST'])
 def agregar_producto():
-    password = request.args.get('password')
+    password = request.args.get('ADMIN_PASSWORD')
         if password != os.getenv('pollito'):
         return "Acceso denegado", 403
     if request.method == 'POST':
