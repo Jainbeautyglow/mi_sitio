@@ -96,8 +96,10 @@ def categoria(nombre):
 @app.route('/agregar_producto', methods=['GET', 'POST'])
 def agregar_producto():
     password = request.args.get('password')
-        if password != os.getenv('ADMIN_PASSWORD'):
+
+    if password != os.getenv('ADMIN_PASSWORD'):
         return "Acceso denegado", 403
+        
     if request.method == 'POST':
         name = request.form['name']
         price = float(request.form['price'])
