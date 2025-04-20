@@ -39,28 +39,31 @@
       </a>
     </div>
 
-<ul>
-  {% for producto in productos %}
-    <li>
-      <strong>{{ producto.name }}</strong> - {{ producto.price }} USD
-    </li>
-  {% else %}
-    <li>No hay productos todavía.</li>
-    <a href="{{ url_for('agregar_producto') }}" class="btn-agregar">Agregar producto</a>
-    <style>
-      .btn-agregar {
-          display: inline-block;
-          background-color: #4CAF50;
-          color: white;
-          padding: 10px 20px;
-          text-decoration: none;
-          border-radius: 5px;
-          margin-bottom: 20px;
-      }
-      .btn-agregar:hover {
-          background-color: #45a049;
-      }
-    </style>
-  {% endfor %}
-</ul>
+    <ul>
+      {% for producto in productos %}
+        <li>
+          <strong>{{ producto.name }}</strong> - {{ producto.price }} USD
+        </li>
+      {% else %}
+        <li>No hay productos todavía.</li>
+      {% endfor %}
+    </ul>
+    
+    {% if ADMIN_MODE %}
+      <a href="{{ url_for('agregar_producto') }}" class="btn-agregar">Agregar producto</a>
+      <style>
+        .btn-agregar {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .btn-agregar:hover {
+            background-color: #45a049;
+        }
+      </style>
+    {% endif %}
 {% endblock %}

@@ -6,6 +6,7 @@ from flask import request, redirect, url_for
 from werkzeug.utils import secure_filename
 import uuid
 import os
+ADMIN_MODE = os.environ.get('ADMIN_MODE', 'False') == 'True'
 
 load_dotenv()
 
@@ -32,8 +33,8 @@ class Product(db.Model):
 # Ruta principal: lista todos los productos
 @app.route('/')
 def index():
-    productos = Product.query.all()
-    return render_template('index.html', products=productos)
+    productos = Product.query.all()  
+    return render_template('index.html', productos=productos, ADMIN_MODE=ADMIN_MODE)
 
 # Rutas de categorías de productos
 @app.route('/bases')
