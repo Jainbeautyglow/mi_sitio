@@ -94,6 +94,9 @@ def categoria(nombre):
 
 @app.route('/agregar_producto', methods=['GET', 'POST'])
 def agregar_producto():
+    password = request.args.get('password')
+        if password != os.getenv('pollito'):
+        return "Acceso denegado", 403
     if request.method == 'POST':
         name = request.form['name']
         descripcion = request.form['descripcion']
@@ -110,7 +113,7 @@ def agregar_producto():
         else:
             image_url = None
 
-        nuevo_producto = Product(name=name, price=price, type=product_type, image_url=image_url)
+        nuevo_producto = Product(name=name, descripcion=descripcion, price=price, type=product_type, image_url=image_url)
         db.session.add(nuevo_producto)
         db.session.commit()
         return redirect(url_for('index'))
