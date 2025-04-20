@@ -5,9 +5,13 @@
 {% block content %}
   <h2>Bases</h2>
   <ul>
-    {% for producto in productos %}
-      <li><strong>{{ producto.name }}</strong> – {{ producto.price }} USD</li>
-    {% else %}
+    {% for product in products %}
+    <div>
+      <img src="{{ product.image_url }}" alt="{{ product.name }}" width="150">
+      <h3>{{ product.name }}</h3>
+      <p>Precio: ${{ product.price }}</p>
+    </div>
+  {% endfor %}
       <li>No hay bases disponibles.</li>
     {% endfor %}
   </ul>

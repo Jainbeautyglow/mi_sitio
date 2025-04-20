@@ -1,0 +1,18 @@
+<!-- templates/bases.html -->
+{% extends 'base.html' %}
+{% block title %}Bases{% endblock %}
+
+{% block content %}
+  <h2>Bases</h2>
+  <ul>
+    {% for producto in productos %}
+    <div class="producto">
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" width="150">
+        <h2>{{ product.name }}</h2>
+        <p>${{ product.price }}</p>
+    </div>
+    {% else %}
+      <li>No hay bases disponibles.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,6 +1,18 @@
+<!-- templates/bases.html -->
 {% extends 'base.html' %}
+{% block title %}Brochas{% endblock %}
 
 {% block content %}
-<h2>LRubores</h2>
-<p>Aquí van los productos de labiales…</p>
+  <h2>Brochas</h2>
+  <ul>
+    {% for product in products %}
+    <div>
+      <img src="{{ product.image_url }}" alt="{{ product.name }}" width="150">
+      <h3>{{ product.name }}</h3>
+      <p>Precio: ${{ product.price }}</p>
+    </div>
+  {% endfor %}
+      <li>No hay bases disponibles.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}
