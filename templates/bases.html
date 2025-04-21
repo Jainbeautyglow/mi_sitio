@@ -1,37 +1,35 @@
-<!-- templates/bases.html -->
 {% extends 'base.html' %}
 {% block title %}Bases{% endblock %}
 
 {% block content %}
-  <h2>Bases</h2>
-  <ul>
+  <h2 class="section-title">Bases</h2>
+
+  <div class="contenedor-productos">
     {% for producto in products %}
-    <div class="producto">
-      <img src="{{ producto.image_url }}" alt="{{ producto.name }}">
-      <h3>{{ producto.name }}</h3>
-      <p>{{ producto.description }}</p>
-      <p><strong>${{ producto.price }}</strong></p>
-  
-      {% if ADMIN_MODE %}
-      <form action="{{ url_for('eliminar_producto', producto_id=producto.id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
-          <button type="submit" class="btn-eliminar">Eliminar</button>
-      </form>
-      {% endif %}
+      <div class="producto-card">
+        <img src="{{ producto.image_url }}" alt="{{ producto.name }}" class="producto-card__img">
+        <div class="producto-card__info">
+          <h3 class="producto-card__name">{{ producto.name }}</h3>
+          <p class="producto-card__price">${{ "%.2f"|format(producto.price) }}</p>
+          <p class="producto-card__desc">{{ producto.description }}</p>
+          {% if ADMIN_MODE %}
+            <form action="{{ url_for('eliminar_producto', producto_id=producto.id) }}"
+                  method="POST"
+                  class="producto-card__actions"
+                  onsubmit="return confirm('¿Eliminar este producto?');">
+              <button type="submit" class="btn-eliminar">🗑️ Eliminar</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    {% else %}
+      <p>No hay bases cargadss aún.</p>
+    {% endfor %}
+  </div>
+
+  {% if ADMIN_MODE %}
+    <div class="admin-bar">
+      <a href="{{ url_for('agregar_producto') }}" class="admin-button">➕ Agregar nueva base</a>
     </div>
-  {% endfor %}
-  </ul>
-  <style>
-    .btn-eliminar {
-        background-color: #e74c3c;
-        color: white;
-        border: none;
-        padding: 6px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 8px;
-    }
-    .btn-eliminar:hover {
-        background-color: #c0392b;
-    }
-    </style>
+  {% endif %}
 {% endblock %}

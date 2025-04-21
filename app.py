@@ -6,9 +6,10 @@ from flask import request, redirect, url_for
 from werkzeug.utils import secure_filename
 import uuid
 import os
-ADMIN_MODE = os.environ.get('ADMIN_MODE', 'False') == 'True'
 
 load_dotenv()
+ADMIN_MODE = os.environ.get('ADMIN_MODE', 'False') == 'True'
+print("ADMIN_MODE:", ADMIN_MODE)
 
 # Configuración de la aplicación
 app = Flask(__name__)
@@ -37,12 +38,12 @@ def index():
     return render_template('index.html', productos=productos, ADMIN_MODE=ADMIN_MODE)
 
 # Rutas de categorías de productos
-@app.route('/bases')
+@app.route('/categoria/bases')
 def bases():
     productos = Product.query.filter_by(type='bases').all()
     return render_template('bases.html', products=productos, ADMIN_MODE=ADMIN_MODE)
 
-@app.route('/labiales')
+@app.route('/categoria/labiales')
 def labiales():
     productos = Product.query.filter_by(type='labiales').all()
     return render_template('labiales.html', products=productos, ADMIN_MODE=ADMIN_MODE)
