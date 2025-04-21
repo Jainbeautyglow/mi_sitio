@@ -1,9 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Labiales{% endblock %}
 
+{% block content %}
+  <h2>Labiales</h2>
+  <div class="lista-productos">
+    {% for producto in products %}
+      <div class="producto">
+        <img src="{{ producto.image_url }}" alt="{{ producto.name }}">
+        <h3>{{ producto.name }}</h3>
+        <p>{{ producto.description }}</p>
+        <p><strong>${{ producto.price }}</strong></p>
 
-{% for product in products %}
-  <div>
-    <img src="{{ product.image_url }}" alt="{{ product.name }}" width="150">
-    <h3>{{ product.name }}</h3>
-    <p>Precio: ${{ product.price }}</p>
+        {% if ADMIN_MODE %}
+        <form action="{{ url_for('eliminar_producto', producto_id=producto.id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
+            <button type="submit" class="btn-eliminar">Eliminar</button>
+        </form>
+        {% endif %}
+      </div>
+    {% endfor %}
   </div>
-{% endfor %}
+
+  <style>
+    .btn-eliminar {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 8px;
+    }
+    .btn-eliminar:hover {
+        background-color: #c0392b;
+    }
+  </style>
+{% endblock %}

@@ -39,38 +39,38 @@ def index():
 # Rutas de categorías de productos
 @app.route('/bases')
 def bases():
-    productos = Product.query.filter_by(type='base').all()
-    return render_template('bases.html', products=productos)
+    productos = Product.query.filter_by(type='bases').all()
+    return render_template('bases.html', products=productos, ADMIN_MODE=ADMIN_MODE)
 
 @app.route('/labiales')
 def labiales():
-    productos = Product.query.filter_by(type='labial').all()
-    return render_template('labiales.html', products=productos)
+    productos = Product.query.filter_by(type='labiales').all()
+    return render_template('labiales.html', products=productos, ADMIN_MODE=ADMIN_MODE)
 
 @app.route('/brochas')
 def brochas():
-    productos = Product.query.filter_by(type='brocha').all()
-    return render_template('brochas.html', products=productos)
+    productos = Product.query.filter_by(type='brochas').all()
+    return render_template('brochas.html', products=productos, ADMIN_MODE=ADMIN_MODE)
 
 @app.route('/pestaninas')
 def pestaninas():
-    productos = Product.query.filter_by(type='pestanina').all()
-    return render_template('pestaninas.html', products=productos)
+    productos = Product.query.filter_by(type='pestañinas').all()
+    return render_template('pestaninas.html', products=productos, ADMIN_MODE=ADMIN_MODE)
 
 @app.route('/rubores')
 def rubores():
-    productos = Product.query.filter_by(type='rubor').all()
-    return render_template('rubores.html', products=productos)
+    productos = Product.query.filter_by(type='rubores').all()
+    return render_template('rubores.html', products=productos, ADMIN_MODE=ADMIN_MODE)
 
 @app.route('/cuidado_capilar')
 def cuidado_capilar():
     productos = Product.query.filter_by(type='cuidado_capilar').all()
-    return render_template('cuidado_capilar.html', products=productos)
+    return render_template('cuidado_capilar.html', products=productos, ADMIN_MODE=ADMIN_MODE)
 
 @app.route('/correctores')
 def correctores():
-    productos = Product.query.filter_by(type='corrector').all()
-    return render_template('correctores.html', products=productos)
+    productos = Product.query.filter_by(type='correctores').all()
+    return render_template('correctores.html', products=productos, ADMIN_MODE=ADMIN_MODE)
 
 # Rutas de páginas estáticas
 @app.route('/popular')
@@ -121,9 +121,22 @@ def agregar_producto():
         nuevo_producto = Product(name=name, price=price, type=product_type, image_url=image_url, description=description)
         db.session.add(nuevo_producto)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for(product_type))  # redirige a su categoría
 
     return render_template('agregar_producto.html')
+@app.route('/eliminar_producto/<int:producto_id>', methods=['POST'])
+def eliminar_producto(producto_id):
+    producto = Product.query.get_or_404(producto_id)
+    
+    # Borrar imagen del sistema si existe
+    if producto.image_url:
+        image_path = producto.image_url.lstrip('/')
+        if os.path.exists(image_path):
+            os.remove(image_path)
+
+    db.session.delete(producto)
+    db.session.commit()
+    return redirect(request.referrer or url_for('index'))
 if __name__ == '__main__':
     # Crear tablas si no existen
     with app.app_context():

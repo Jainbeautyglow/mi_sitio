@@ -1,18 +1,37 @@
-<!-- templates/bases.html -->
 {% extends 'base.html' %}
-{% block title %}Bases{% endblock %}
+{% block title %}Labiales{% endblock %}
 
 {% block content %}
-  <h2>Bases</h2>
-  <ul>
-    {% for producto in productos %}
-    <div class="producto">
-        <img src="{{ product.image_url }}" alt="{{ product.name }}" width="150">
-        <h2>{{ product.name }}</h2>
-        <p>${{ product.price }}</p>
-    </div>
-    {% else %}
-      <li>No hay bases disponibles.</li>
+  <h2>Labiales</h2>
+  <div class="lista-productos">
+    {% for producto in products %}
+      <div class="producto">
+        <img src="{{ producto.image_url }}" alt="{{ producto.name }}">
+        <h3>{{ producto.name }}</h3>
+        <p>{{ producto.description }}</p>
+        <p><strong>${{ producto.price }}</strong></p>
+
+        {% if ADMIN_MODE %}
+        <form action="{{ url_for('eliminar_producto', producto_id=producto.id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
+            <button type="submit" class="btn-eliminar">Eliminar</button>
+        </form>
+        {% endif %}
+      </div>
     {% endfor %}
-  </ul>
+  </div>
+
+  <style>
+    .btn-eliminar {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 8px;
+    }
+    .btn-eliminar:hover {
+        background-color: #c0392b;
+    }
+  </style>
 {% endblock %}
