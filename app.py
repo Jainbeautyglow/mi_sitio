@@ -4,7 +4,6 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
-from flask_login import logout_user, login_required
 from models import User  # o desde donde tengas el modelo importado
 from models import db, Product
 
@@ -49,6 +48,47 @@ def login():
     else:
         flash('Correo o contraseña incorrectos', 'danger')
         return redirect(url_for('index'))
+    
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    # Si ya está logueado, no permito volver a registrarse
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        email    = request.form['email']
+        password = request.form['password']
+        confirm  = request.form['confirm']
+
+        # Validaciones básicas
+        if password != confirm:
+            flash("Las contraseñas no coinciden", "warning")
+            return redirect(url_for('register'))
+        if User.query.filter_by(email=email).first():
+            flash("Ese correo ya está registrado", "warning")
+            return redirect(url_for('register'))
+
+        # Crear y guardar
+        new_user = User(email=email, is_admin=False)
+        new_user.set_password(password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash("¡Registro exitoso! Ahora haz login.", "success")
+        return redirect(url_for('index'))
+
+    return render_template('register.html')
+@app.route('/admin/users')
+@login_required
+def admin_users():
+    # Solo si es admin
+    if not current_user.is_admin:
+        flash("Acceso denegado", "danger")
+        return redirect(url_for('index'))
+
+    users = User.query.all()
+    total = len(users)
+    return render_template('admin_users.html', users=users, total=total)
 
 @app.route('/logout')
 @login_required

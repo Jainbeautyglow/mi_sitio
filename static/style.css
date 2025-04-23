@@ -161,8 +161,8 @@ header img {
 }
 
 .user-btn .user-icon {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -362,7 +362,7 @@ header img {
   transform: translate(-50%, -50%);
     /* Tamaño y estilo */
   max-width: 400px; /* ancho ventana usuario */
-  max-height: 78vh;/* alto ventana usuario */
+  max-height: 70vh;/* alto ventana usuario */
   height: 80%; 
   width: 80%;
   background: rgba(243, 216, 216, 0.95);
@@ -544,6 +544,15 @@ header img {
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s;
+}
+
+/* acotar altura y padding de los botones dentro del modal */
+#loginModal .botones-auth .btn-auth,
+#loginModal .botones-auth .btn-outline-secondary {
+  padding: 0.5rem 1rem;    /* menos padding vertical */
+  font-size: 0.9rem;       /* texto un poco más pequeño */
+  line-height: 1.2;        /* altura de línea ajustada */
+  height: auto;            /* deja que el texto marque la altura */
 }
 
 /* Login */

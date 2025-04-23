@@ -50,10 +50,9 @@
       </div>
       <div class="user-options">
         {% if not current_user.is_authenticated %}
-        <!-- modal trigger -->
         <div id="loginBtn" class="user-btn">
-          <img src="{{ url_for('static', filename='img/user-icon.jpg') }}" class="user-icon">
-          <span class="user-text">Usuario<br><strong>Iniciar Sesión</strong></span>
+          <img … class="user-icon">
+          <span class="user-text">Usuario<br><strong>Login</strong></span>
         </div>
         {% else %}
         <div class="user-dropdown dropdown">
@@ -84,6 +83,12 @@
       <a href="{{ url_for('envios') }}">Tipos de Envíos</a>
       <a href="{{ url_for('contacto') }}">Contactanos</a>
     </nav>
+  {% if current_user.is_authenticated and current_user.is_admin %}
+  <nav class="admin-nav text-center py-2 bg-light">
+    <a href="{{ url_for('admin_users') }}" class="me-3">👥 Ver usuarios</a>
+    <!-- más links admin aquí… -->
+  </nav>
+  {% endif %}
   </header>
   <!-- ========== FIN ENCABEZADO ========== -->
 
@@ -100,8 +105,11 @@
           <label><input type="checkbox" name="remember"> Recordarme</label>
           <a href="#">Olvide mi contraseña</a>
         </div>
-        <div class="botones-auth">
-          <button type="submit" class="btn-auth btn-login">Login</button>
+        <div class="botones-auth d-flex justify-content-between mt-3">
+          <button type="submit" class="btn-auth btn-login me-2 w-50">Login</button>
+          <a href="{{ url_for('register') }}" class="btn btn-outline-secondary w-50 ms-2">
+            Registrarse
+          </a>
         </div>
       </form>
       <div class="social-login">

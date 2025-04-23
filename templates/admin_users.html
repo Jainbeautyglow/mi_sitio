@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Usuarios registrados{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <h2>Usuarios registrados: {{ total }}</h2>
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Es Admin</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ '✔️' if u.is_admin else '' }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
