@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from models import User  # o desde donde tengas el modelo importado
 from models import db, Product
+from flask import jsonify, flash
 
 
 
@@ -31,6 +32,7 @@ migrate = Migrate(app, db)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'index'
+
 
 @login_manager.user_loader
 def load_user(user_id):
