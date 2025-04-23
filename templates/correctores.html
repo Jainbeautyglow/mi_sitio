@@ -2,36 +2,35 @@
 {% block title %}Correctores{% endblock %}
 
 {% block content %}
-  <h2>Labiales</h2>
-  <div class="lista-productos">
-    {% for producto in products %}
-      <div class="producto">
-        <img src="{{ producto.image_url }}" alt="{{ producto.name }}">
-        <h3>{{ producto.name }}</h3>
-        <p>{{ producto.description }}</p>
-        <p><strong>${{ producto.price }}</strong></p>
+  <h2 class="section-title">Correctores</h2>
 
-        {% if ADMIN_MODE %}
-        <form action="{{ url_for('eliminar_producto', producto_id=producto.id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
-            <button type="submit" class="btn-eliminar">Eliminar</button>
-        </form>
-        {% endif %}
+  <div class="contenedor-productos">
+    {% for producto in products %}
+      <div class="producto-card">
+        <img src="{{ producto.image_url }}" alt="{{ producto.name }}" class="producto-card__img">
+        <div class="producto-card__info">
+          <h3 class="producto-card__name">{{ producto.name }}</h3>
+          <p class="producto-card__price">${{ "%.2f"|format(producto.price) }}</p>
+          <p class="producto-card__desc">{{ producto.description }}</p>
+          {% if current_user.is_authenticated and current_user.is_admin %}
+          <form action="{{ url_for('eliminar_producto', producto_id=producto.id) }}"
+                method="POST" class="producto-card__actions"
+                onsubmit="return confirm('¿Eliminar este producto?');">
+            <button type="submit" class="btn-eliminar">🗑️ Eliminar</button>
+          </form>
+          {% endif %}
+        </div>
       </div>
+    {% else %}
+      <p>No hay Correctores cargados aún.</p>
     {% endfor %}
   </div>
 
-  <style>
-    .btn-eliminar {
-        background-color: #e74c3c;
-        color: white;
-        border: none;
-        padding: 6px 12px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-top: 8px;
-    }
-    .btn-eliminar:hover {
-        background-color: #c0392b;
-    }
-  </style>
+  {% if current_user.is_authenticated and current_user.is_admin %}
+    <div class="admin-bar">
+      <a href="{{ url_for('agregar_producto') }}" class="admin-button">
+        ➕ Agregar nuevo labial
+      </a>
+    </div>
+  {% endif %}
 {% endblock %}

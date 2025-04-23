@@ -1,11 +1,14 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
+import os, uuid
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_migrate import Migrate
 from dotenv import load_dotenv
-from flask import request, redirect, url_for
 from werkzeug.utils import secure_filename
-import uuid
-import os
+from flask_login import LoginManager, login_user, logout_user, current_user, login_required
+from flask_login import logout_user, login_required
+from models import User  # o desde donde tengas el modelo importado
+from models import db, Product
+
+
 
 load_dotenv()
 ADMIN_MODE = os.environ.get('ADMIN_MODE', 'False') == 'True'
@@ -13,66 +16,86 @@ print("ADMIN_MODE:", ADMIN_MODE)
 
 # Configuración de la aplicación
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///productos.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-UPLOAD_FOLDER = 'static/uploads'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-# Inicialización de extensiones
-db = SQLAlchemy(app)
+app.config.from_mapping(
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL'), 
+    SQLALCHEMY_TRACK_MODIFICATIONS = False, 
+    SECRET_KEY = os.getenv('SECRET_KEY', 'cualquiercosa'), 
+    UPLOAD_FOLDER = 'static/uploads'
+)
+#ASEGURAMOS DE QUE EXISTA LA CARPETA
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+# Inicialización de extensiones IMPORTAR MODELOS Y DB
+db.init_app(app)
 migrate = Migrate(app, db)
 
-# Modelo de producto
-class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    price = db.Column(db.Float, nullable=False)
-    type = db.Column(db.String(50), nullable=False)
-    image_url = db.Column(db.String(200))  # nuevo campo
-    description = db.Column(db.Text)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'index'
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+@app.route('/login', methods=['POST'])# Boton de usuario
+def login():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    user = User.query.filter_by(email=email).first()
+
+    if user and user.check_password(password):
+        login_user(user)
+        flash('Inicio de sesión exitoso', 'success')
+        return redirect(url_for('index'))  # redirige a donde quieras
+    else:
+        flash('Correo o contraseña incorrectos', 'danger')
+        return redirect(url_for('index'))
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 # Ruta principal: lista todos los productos
 @app.route('/')
 def index():
     productos = Product.query.all()  
-    return render_template('index.html', productos=productos, ADMIN_MODE=ADMIN_MODE)
+    return render_template('index.html', productos=productos)
 
 # Rutas de categorías de productos
 @app.route('/categoria/bases')
 def bases():
     productos = Product.query.filter_by(type='bases').all()
-    return render_template('bases.html', products=productos, ADMIN_MODE=ADMIN_MODE)
+    return render_template('bases.html', products=productos)
 
 @app.route('/categoria/labiales')
 def labiales():
     productos = Product.query.filter_by(type='labiales').all()
-    return render_template('labiales.html', products=productos, ADMIN_MODE=ADMIN_MODE)
+    return render_template('labiales.html', products=productos)
 
-@app.route('/brochas')
+@app.route('/categoria/brochas')
 def brochas():
     productos = Product.query.filter_by(type='brochas').all()
-    return render_template('brochas.html', products=productos, ADMIN_MODE=ADMIN_MODE)
+    return render_template('brochas.html', products=productos)
 
-@app.route('/pestaninas')
+@app.route('/categoria/pestaninas')
 def pestaninas():
     productos = Product.query.filter_by(type='pestañinas').all()
-    return render_template('pestaninas.html', products=productos, ADMIN_MODE=ADMIN_MODE)
+    return render_template('pestaninas.html', products=productos)
 
-@app.route('/rubores')
+@app.route('/categoria/rubores')
 def rubores():
     productos = Product.query.filter_by(type='rubores').all()
-    return render_template('rubores.html', products=productos, ADMIN_MODE=ADMIN_MODE)
+    return render_template('rubores.html', products=productos)
 
-@app.route('/cuidado_capilar')
+@app.route('/categoria/cuidado_capilar')
 def cuidado_capilar():
     productos = Product.query.filter_by(type='cuidado_capilar').all()
-    return render_template('cuidado_capilar.html', products=productos, ADMIN_MODE=ADMIN_MODE)
+    return render_template('cuidado_capilar.html', products=productos)
 
-@app.route('/correctores')
+@app.route('/categoria/correctores')
 def correctores():
     productos = Product.query.filter_by(type='correctores').all()
-    return render_template('correctores.html', products=productos, ADMIN_MODE=ADMIN_MODE)
-
+    return render_template('correctores.html', products=productos)
 # Rutas de páginas estáticas
 @app.route('/popular')
 def popular():
@@ -97,47 +120,44 @@ def categoria(nombre):
 
 @app.route('/agregar_producto', methods=['GET', 'POST'])
 def agregar_producto():
-    password = request.args.get('password')
-
-    if password != os.getenv('ADMIN_PASSWORD'):
+    if request.args.get('password') != os.getenv('ADMIN_PASSWORD'):
         return "Acceso denegado", 403
 
     if request.method == 'POST':
-        name = request.form['name']
-        price = float(request.form['price'])
-        product_type = request.form['type']
-        image = request.files['image']
-        description = request.form['description']
-        
+        name   = request.form['name']
+        price  = float(request.form['price'])
+        tipo   = request.form['type']
+        img    = request.files['image']
+        desc   = request.form['description']
 
-        if image:
-            filename = secure_filename(image.filename)
-            unique_filename = f"{uuid.uuid4().hex}_{filename}"
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-            image.save(image_path)
-            image_url = f"/static/uploads/{unique_filename}"
+        if img:
+            fn = secure_filename(img.filename)
+            unique = f"{uuid.uuid4().hex}_{fn}"
+            path   = os.path.join(app.config['UPLOAD_FOLDER'], unique)
+            img.save(path)
+            img_url = f"/static/uploads/{unique}"
         else:
-            image_url = None
+            img_url = None
 
-        nuevo_producto = Product(name=name, price=price, type=product_type, image_url=image_url, description=description)
-        db.session.add(nuevo_producto)
+        p = Product(name=name, price=price, type=tipo, image_url=img_url, description=desc)
+        db.session.add(p)
         db.session.commit()
-        return redirect(url_for(product_type))  # redirige a su categoría
+        return redirect(url_for('categoria', nombre=tipo))
 
     return render_template('agregar_producto.html')
+
 @app.route('/eliminar_producto/<int:producto_id>', methods=['POST'])
 def eliminar_producto(producto_id):
-    producto = Product.query.get_or_404(producto_id)
-    
-    # Borrar imagen del sistema si existe
-    if producto.image_url:
-        image_path = producto.image_url.lstrip('/')
-        if os.path.exists(image_path):
-            os.remove(image_path)
-
-    db.session.delete(producto)
+    p = Product.query.get_or_404(producto_id)
+    # borrar archivo si existe
+    if p.image_url:
+        f = p.image_url.lstrip('/')
+        if os.path.exists(f):
+            os.remove(f)
+    db.session.delete(p)
     db.session.commit()
     return redirect(request.referrer or url_for('index'))
+
 if __name__ == '__main__':
     # Crear tablas si no existen
     with app.app_context():

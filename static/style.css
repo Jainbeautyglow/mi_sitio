@@ -15,9 +15,9 @@
 .top-row {
   display: flex;
   align-items: center;
-  justify-content: center;  /* centra todo el bloque */
+  justify-content: space-between;  /* ahora logo a la izquierda, user-options a la derecha */
   flex-wrap: wrap;
-  gap: 20px;                 /* espacio entre logo, título, búsqueda y user-options */
+  gap: 20px;
 }
 
 
@@ -46,7 +46,7 @@ header img {
 .search-area {
   display: flex;
   align-items: center;
-  width: 600px;       /* tu ancho deseado */
+  width: 450px;       /* tu ancho deseado */
   max-width: 80vw;
   margin: 0 auto;
   gap: 0;             /* ya no necesitamos gap: lo haremos con border-radius */
@@ -177,6 +177,66 @@ header img {
   border-radius: 6px;
 }
 
+/* Contenedor del dropdown de usuario */
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 1rem;  /* separa un poco del buscador */
+}
+
+/* Botón que abre el dropdown */
+.user-dropdown .user-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: #f3d8d8;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  color: #333;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.user-dropdown .user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* El menú en sí */
+.user-dropdown .dropdown-menu {
+  min-width: 140px;    /* ancho fijo para no verse enorme */
+  padding: 0;
+  margin: 0;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.user-dropdown .dropdown-item {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+}
+
+/* Items del menú usuario luego de iniciar sesion*/
+.user-dropdown .dropdown-menu li {
+  padding: 8px 12px;
+}
+.user-dropdown .dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
+}
+.user-dropdown .dropdown-menu li a:hover {
+  background: #f5f5f5;
+}
+.dropdown .dropdown-menu {
+  min-width: auto; /* Ajusta al contenido */
+}
+.dropdown .dropdown-toggle {
+  padding: 0.25rem 0.5rem;
+}
+
   /* Segunda fila: barra de navegación horizontal */
   
   .bottom-nav {
@@ -302,7 +362,7 @@ header img {
   transform: translate(-50%, -50%);
     /* Tamaño y estilo */
   max-width: 400px; /* ancho ventana usuario */
-  max-height: 75vh;/* alto ventana usuario */
+  max-height: 78vh;/* alto ventana usuario */
   height: 80%; 
   width: 80%;
   background: rgba(243, 216, 216, 0.95);
@@ -318,23 +378,26 @@ header img {
 .modal *,
 .modal-content *{
   max-width: 100%;
-  box-sizing: border-box;
+  box-sizing: box;
 }
 .modal-content {
   display: flex;
   flex-direction: column;  /* Apila hijos verticalmente */
-  gap: 10px;               /* Espacio uniforme entre cada hijo */
-  padding: 20x 10px;
-  max-width: 100%;
-  width: 100%;
-  align-content: center;
-   /* … */
-}
+  background-color: rgba(243, 216, 216, 0.95);
+  border-radius: 16px;
+  padding: 1.0rem;         /* ajusta al gusto */
+  max-height: 70vh;        /* evita el scroll excesivo */
+  overflow-y: auto;        /* solo el contenido, no el marco */
+} 
 
 .modal-content input {   /* tamaños y modificaciones casillas de correo y contraseña */
+  display: block;
   width: 100%;            /* Ancho: 80% del contenedor .modal-content */
   max-width: 700px;      /* No crecerá más de 1000px */
-  padding: 15px;         /* Espacio inteSrno: 20px arriba/abajo y 20px izq/der */
+  max-height: 100px;
+  height: 25%;
+  padding: 0.7rem;         /* Espacio inteSrno: 20px arriba/abajo y 20px izq/der */
+  margin-bottom: 1rem;
   border: none;          /* Sin borde */
   border-radius: 10px;   /* Esquinas redondeadas de 10px */
   background: #ffffff;   /* Fondo oscuro para el input */

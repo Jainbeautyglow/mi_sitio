@@ -4,6 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}Mi Tienda{% endblock %}</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+  rel="stylesheet">
+<!-- Bootstrap Bundle (Popper + JS) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+  defer></script>
   <!-- Links a tus archivos CSS y JS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <script defer src="{{ url_for('static', filename='script.js') }}"></script>
@@ -43,10 +49,29 @@
           </button>
       </div>
       <div class="user-options">
+        {% if not current_user.is_authenticated %}
+        <!-- modal trigger -->
         <div id="loginBtn" class="user-btn">
-          <img src="{{ url_for('static', filename='img/user-icon.jpg') }}" alt="User Icon" class="user-icon">
-          <span class="user-text">Usuario<br><strong>Inicio Sesión</strong></span>
+          <img src="{{ url_for('static', filename='img/user-icon.jpg') }}" class="user-icon">
+          <span class="user-text">Usuario<br><strong>Iniciar Sesión</strong></span>
         </div>
+        {% else %}
+        <div class="user-dropdown dropdown">
+          <button class="user-btn dropdown-toggle" 
+                  type="button" 
+                  id="userDropdown" 
+                  data-bs-toggle="dropdown" 
+                  aria-expanded="false">
+            <img src="{{ url_for('static', filename='img/user-icon.jpg') }}" class="user-icon">
+            <span class="user-text">{{ current_user.email }}</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li>
+              <a class="dropdown-item" href="{{ url_for('logout') }}">Cerrar sesión</a>
+            </li>
+          </ul>
+        </div>
+        {% endif %}
         <div class="returns">Devoluciones<br><strong>y Pedidos</strong></div>
         <div class="cart">🛒 Carrito</div>
       </div>
@@ -68,16 +93,17 @@
       <span class="close">&times;</span>
       <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Manga 1">
       <h2>Bienvenido de nuevo!</h2>
-      <input type="email" placeholder="Correo">
-      <input type="password" placeholder="Contraseña">
-      <div class="options">
-        <label><input type="checkbox"> Recordarme</label>
-        <a href="#">Olvide mi contraseña</a>
-      </div>
-      <div class="botones-auth">
-        <button class="btn-auth btn-registrarse">Registrarse</button>
-        <button class="btn-auth btn-login">Login</button>
-      </div>
+      <form method="POST" action="{{ url_for('login') }}">
+        <input type="email" name="email" placeholder="Correo" required>
+        <input type="password" name="password" placeholder="Contraseña" required>
+        <div class="options">
+          <label><input type="checkbox" name="remember"> Recordarme</label>
+          <a href="#">Olvide mi contraseña</a>
+        </div>
+        <div class="botones-auth">
+          <button type="submit" class="btn-auth btn-login">Login</button>
+        </div>
+      </form>
       <div class="social-login">
         <p>O inicia sesión con:</p>
         <button class="social-btn gmail">Continuar con Gmail</button>

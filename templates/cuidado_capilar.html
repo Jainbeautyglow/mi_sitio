@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Cuidado capilar{% endblock %}
+
+{% block content %}
+  <h2 class="section-title">Cuidado Capilar</h2>
+
+  <div class="contenedor-productos">
+    {% for producto in products %}
+      <div class="producto-card">
+        <img src="{{ producto.image_url }}" alt="{{ producto.name }}" class="producto-card__img">
+        <div class="producto-card__info">
+          <h3 class="producto-card__name">{{ producto.name }}</h3>
+          <p class="producto-card__price">${{ "%.2f"|format(producto.price) }}</p>
+          <p class="producto-card__desc">{{ producto.description }}</p>
+          {% if current_user.is_authenticated and current_user.is_admin %}
+          <form action="{{ url_for('eliminar_producto', producto_id=producto.id) }}"
+                method="POST" class="producto-card__actions"
+                onsubmit="return confirm('¿Eliminar este producto?');">
+            <button type="submit" class="btn-eliminar">🗑️ Eliminar</button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+    {% else %}
+      <p>No hay Cuidado Capilar cargados aún.</p>
+    {% endfor %}
+  </div>
+
+  {% if current_user.is_authenticated and current_user.is_admin %}
+    <div class="admin-bar">
+      <a href="{{ url_for('agregar_producto') }}" class="admin-button">
+        ➕ Agregar nuevo labial
+      </a>
+    </div>
+  {% endif %}
+{% endblock %}
