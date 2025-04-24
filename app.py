@@ -6,9 +6,11 @@ from werkzeug.utils import secure_filename
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from models import User  # o desde donde tengas el modelo importado
 from models import db, Product
-from flask import jsonify, flash
+from ubicaciones import cobertura
 
 
+departamentos = cobertura["departamentos"]
+municipios = cobertura["municipios"]
 
 load_dotenv()
 ADMIN_MODE = os.environ.get('ADMIN_MODE', 'False') == 'True'
@@ -53,7 +55,6 @@ def login():
     
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    # Si ya está logueado, no permito volver a registrarse
     if current_user.is_authenticated:
         return redirect(url_for('index'))
 
@@ -62,7 +63,6 @@ def register():
         password = request.form['password']
         confirm  = request.form['confirm']
 
-        # Validaciones básicas
         if password != confirm:
             flash("Las contraseñas no coinciden", "warning")
             return redirect(url_for('register'))
@@ -70,7 +70,6 @@ def register():
             flash("Ese correo ya está registrado", "warning")
             return redirect(url_for('register'))
 
-        # Crear y guardar
         new_user = User(email=email, is_admin=False)
         new_user.set_password(password)
         db.session.add(new_user)
@@ -79,7 +78,9 @@ def register():
         flash("¡Registro exitoso! Ahora haz login.", "success")
         return redirect(url_for('index'))
 
-    return render_template('register.html')
+    # <-- este return se ejecuta en caso de método GET
+    return render_template('register.html', departamentos=departamentos, municipios=municipios)
+
 @app.route('/admin/users')
 @login_required
 def admin_users():

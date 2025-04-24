@@ -19,7 +19,58 @@
       <label for="confirm" class="form-label">Repetir contraseña</label>
       <input type="password" class="form-control" id="confirm" name="confirm" required>
     </div>
+<!-- ↓↓↓ SELECT Departamentos ↓↓↓ -->
+    <div class="mb-3">
+      <label for="departamento" class="form-label">Departamento</label>
+      <select class="form-control" id="departamento" name="departamento" required>
+        <option value="">Selecciona un departamento</option>
+        {% for d in departamentos %}
+          <option value="{{ d }}">{{ d }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- ↓↓↓ SELECT Municipios (se llenará vía JS) ↓↓↓ -->
+    <div class="mb-3">
+      <label for="municipio" class="form-label">Municipio</label>
+      <select class="form-control" id="municipio" name="municipio" required>
+        <option value="">Selecciona primero un departamento</option>
+      </select>
+    </div>
+
     <button type="submit" class="btn btn-primary w-100">Registrarse</button>
   </form>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 1) Jinja convierte el dict/list de Python en literales JS
+    const departamentos = {{ departamentos | tojson }};
+    const municipiosByDept = {{ municipios    | tojson }};
+    
+    console.log("Departamentos:", departamentos);
+    console.log("Municipios por dept:", municipiosByDept);
+
+    const deptSelect = document.getElementById('departamento');
+    const muniSelect = document.getElementById('municipio');
+
+    // 2) Llenamos el select de departamentos
+    departamentos.forEach(d => {
+      const opt = document.createElement('option');
+      opt.value = d;
+      opt.textContent = d;
+      deptSelect.appendChild(opt);
+    });
+
+    // 3) Cuando cambias departamento, actualizas municipios
+    deptSelect.addEventListener('change', (e) => {
+      muniSelect.innerHTML = `<option value="">Seleccione municipio</option>`;
+      (municipiosByDept[e.target.value] || []).forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        muniSelect.appendChild(opt);
+      });
+    });
+  });
+</script>
 {% endblock %}
