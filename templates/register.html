@@ -10,7 +10,10 @@
       <label for="email" class="form-label">Correo electrónico</label>
       <input type="email" class="form-control" id="email" name="email" required>
     </div>
-    
+    <div class="mb-3">
+      <label for="phone">Número de celular</label>
+      <input type="tel" name="phone" id="phone" class="form-control" required pattern="[0-9]{10}" inputmode="numeric" title="Debe contener 10 dígitos numéricos">
+    </div>
     <div class="mb-3">
       <label for="password" class="form-label">Contraseña</label>
       <input type="password" class="form-control" id="password" name="password" required>
