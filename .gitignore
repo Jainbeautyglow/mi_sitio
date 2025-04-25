@@ -16,3 +16,6 @@ migrations/versions/
 .vscode/
 .idea/
 *.log
+*.tmp
+*.bak
+.env
