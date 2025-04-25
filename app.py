@@ -40,10 +40,9 @@ login_manager.login_view = 'index'
 
 
 google_bp = make_google_blueprint(
-    client_id=os.getenv("GOOGLE_OAUTH_CLIENT_ID"),
-    client_secret=os.getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
-    scope=["profile", "email"],
-    redirect_to="google_login"  # nombre de la ruta a la que redirige después del login
+    client_id=os.getenv("GOOGLE_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    redirect_to="google_login"
 )
 app.register_blueprint(google_bp, url_prefix="/login")
 
@@ -83,7 +82,6 @@ def register():
             return redirect(url_for('register'))
 
         new_user = User(email=email, is_admin=False, phone=phone)
-        new_user = User(email=email, is_admin=False)
         new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
@@ -115,6 +113,7 @@ def google_login():
         return redirect(url_for("index"))
     else:
         flash("Error al obtener datos de Google", "danger")
+        print("Google login error:", resp.text)
         return redirect(url_for("index"))
 
 @app.route('/admin/users')
