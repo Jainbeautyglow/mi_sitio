@@ -5,7 +5,7 @@
 	symlinks = false
 	ignorecase = true
 [remote "origin"]
-	url = https://github.com/Jainbeautyglow/mi_sitio.git
+	url = C:/Users/JANNER/Videos/Proyecto/mi_sitio/.
 	tagOpt = --no-tags
 	fetch = +refs/*:refs/*
 	mirror = true
