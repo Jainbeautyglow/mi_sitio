@@ -9,6 +9,8 @@ __pycache__/
 # Base de datos SQLite de desarrollo
 *.db
 
+mi_sitio.git/
+
 # Migraciones generadas automáticamente
 migrations/versions/
 
