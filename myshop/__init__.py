@@ -17,15 +17,18 @@ def create_app():
     load_dotenv()
     print(f"GOOGLE_OAUTH_CLIENT_ID: {os.getenv('GOOGLE_OAUTH_CLIENT_ID')}")
     print(f"GOOGLE_OAUTH_CLIENT_SECRET: {os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')}")
-    app = Flask(__name__)
-    app.config.from_object(Config)
+
+    app = Flask(__name__, template_folder='templates', static_folder='static')
+    app.config.from_object('myshop.config.ProductionConfig')
+    app.config.from_envvar('APP_CONFIG_FILE', silent=True)
 
     os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
     # extensiones
     db.init_app(app)
-    Migrate(app, db)
+    migrate.init_app(app, db)
     login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
 
     # OAuth Google
     google_bp = make_google_blueprint(

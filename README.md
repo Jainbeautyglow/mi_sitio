@@ -25,12 +25,11 @@ MI_SITIO/
 │   ├── config.py              # Configuración de Flask
 │   ├── models.py              # Modelos de base de datos
 │   └── ubicaciones.py         # Archivo adicional (por ejemplo, para localizaciones)
-│
-├── static/                    # Archivos estáticos
-│   ├── img/
-│   ├── uploads/
-│   ├── script.js
-│   └── style.css
+│   └── static/ 
+│   │   └── img/
+│   │   └── uploads/
+│   │   └── script.js
+│   │   └── style.css                   # Archivos estáticos
 │
 ├── run.py                     # Punto de entrada de la aplicación
 ├── .env.example               # Variables de entorno de ejemplo
