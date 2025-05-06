@@ -9,6 +9,8 @@ class Config:
         or 'sqlite:///' + os.path.join(basedir, 'productos.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join(basedir, 'static/uploads')
+    GOOGLE_OAUTH_CLIENT_ID = os.getenv('GOOGLE_OAUTH_CLIENT_ID')
+    GOOGLE_OAUTH_CLIENT_SECRET = os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')
 
 class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URL')

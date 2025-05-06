@@ -1,3 +1,2 @@
-FLASK_APP=_init_.py
-FLASK_RUN_PORT=5000
+FLASK_APP=run:create_app
 FLASK_ENV=development

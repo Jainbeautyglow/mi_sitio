@@ -5,8 +5,8 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.utils import secure_filename
 from flask_dance.contrib.google import google
 
-from .models import db, User, Product
-from .ubicaciones import cobertura
+from myshop.models import db, User, Product
+from myshop.ubicaciones import cobertura
 
 auth = Blueprint('auth', __name__)
 

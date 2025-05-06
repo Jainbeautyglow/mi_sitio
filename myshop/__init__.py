@@ -15,6 +15,8 @@ login_manager.login_view = 'auth.login'
 
 def create_app():
     load_dotenv()
+    print(f"GOOGLE_OAUTH_CLIENT_ID: {os.getenv('GOOGLE_OAUTH_CLIENT_ID')}")
+    print(f"GOOGLE_OAUTH_CLIENT_SECRET: {os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')}")
     app = Flask(__name__)
     app.config.from_object(Config)
 
