@@ -5,7 +5,7 @@
 {% block content %}
 <div class="register-form" style="max-width:400px; margin:2rem auto; background:#f3d8d8; padding:1rem; border-radius:8px;">
   <h2 style="text-align:center; color:#cb8587;">Crear cuenta</h2>
-  <form method="POST" action="{{ url_for('register') }}">
+  <form method="POST" action="{{ url_for('auth.register') }}">
     <div class="mb-3">
       <label for="email" class="form-label">Correo electrónico</label>
       <input type="email" class="form-control" id="email" name="email" required>

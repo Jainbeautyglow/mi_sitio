@@ -10,7 +10,7 @@ __pycache__/
 *.db
 
 mi_sitio.git/
-
+instance/
 # Migraciones generadas automáticamente
 migrations/versions/
 

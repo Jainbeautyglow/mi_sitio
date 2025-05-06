@@ -6,9 +6,8 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_dance.contrib.google import make_google_blueprint
 from dotenv import load_dotenv
-
 from .models import db, User
-from .config import Config
+from .config import ProductionConfig
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -19,6 +18,7 @@ def create_app():
     print(f"GOOGLE_OAUTH_CLIENT_SECRET: {os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')}")
 
     app = Flask(__name__, template_folder='templates', static_folder='static')
+
     app.config.from_object('myshop.config.ProductionConfig')
     app.config.from_envvar('APP_CONFIG_FILE', silent=True)
 
@@ -26,9 +26,9 @@ def create_app():
 
     # extensiones
     db.init_app(app)
-    migrate.init_app(app, db)
+    Migrate(app, db)
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
+
 
     # OAuth Google
     google_bp = make_google_blueprint(

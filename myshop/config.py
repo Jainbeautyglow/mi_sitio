@@ -12,7 +12,10 @@ class Config:
     GOOGLE_OAUTH_CLIENT_ID = os.getenv('GOOGLE_OAUTH_CLIENT_ID')
     GOOGLE_OAUTH_CLIENT_SECRET = os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')
 
+class ProductionConfig(Config):
+    DEBUG = False
 class DevelopmentConfig(Config):
+    DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URL')
 
 def create_app(config_class=DevelopmentConfig):

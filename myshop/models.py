@@ -21,8 +21,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(256), nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
     phone        = db.Column(db.String(20))    # celular
-    department   = db.Column(db.String(100))   # departamento
-    municipality = db.Column(db.String(100))   # municipio
+    departamento   = db.Column(db.String(100))   # departamento
+    municipio = db.Column(db.String(100))   # municipio
 
     def set_password(self, password):
         from werkzeug.security import generate_password_hash
