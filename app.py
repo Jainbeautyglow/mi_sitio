@@ -16,6 +16,21 @@ municipios = cobertura["municipios"]
 load_dotenv()
 ADMIN_MODE = os.environ.get('ADMIN_MODE', 'False') == 'True'
 print("ADMIN_MODE:", ADMIN_MODE)
+from dotenv import load_dotenv
+from werkzeug.utils import secure_filename
+from flask_login import LoginManager, login_user, logout_user, current_user, login_required
+from models import User  # o desde donde tengas el modelo importado
+from models import db, Product
+from ubicaciones import cobertura
+from flask_dance.contrib.google import make_google_blueprint, google
+
+
+departamentos = cobertura["departamentos"]
+municipios = cobertura["municipios"]
+
+load_dotenv()
+ADMIN_MODE = os.environ.get('ADMIN_MODE', 'False') == 'True'
+print("ADMIN_MODE:", ADMIN_MODE)
 
 # Configuración de la aplicación
 app = Flask(__name__)
@@ -40,9 +55,10 @@ login_manager.login_view = 'index'
 
 
 google_bp = make_google_blueprint(
-    client_id=os.getenv("GOOGLE_CLIENT_ID"),
-    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
-    redirect_to="google_login"
+    client_id=os.getenv("GOOGLE_OAUTH_CLIENT_ID"),
+    client_secret=os.getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
+    scope=["profile", "email"],
+    redirect_to="google_login"  # nombre de la ruta a la que redirige después del login
 )
 app.register_blueprint(google_bp, url_prefix="/login")
 
@@ -82,6 +98,7 @@ def register():
             return redirect(url_for('register'))
 
         new_user = User(email=email, is_admin=False, phone=phone)
+        new_user = User(email=email, is_admin=False)
         new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
@@ -113,7 +130,6 @@ def google_login():
         return redirect(url_for("index"))
     else:
         flash("Error al obtener datos de Google", "danger")
-        print("Google login error:", resp.text)
         return redirect(url_for("index"))
 
 @app.route('/admin/users')
@@ -135,43 +151,59 @@ def logout():
     return redirect(url_for('index'))
 # Ruta principal: lista todos los productos
 @app.route('/')
+@app.route('/')
 def index():
+    productos = Product.query.all()  
+    return render_template('index.html', productos=productos)
     productos = Product.query.all()  
     return render_template('index.html', productos=productos)
 
 # Rutas de categorías de productos
 @app.route('/categoria/bases')
+@app.route('/categoria/bases')
 def bases():
+    productos = Product.query.filter_by(type='bases').all()
     productos = Product.query.filter_by(type='bases').all()
     return render_template('bases.html', products=productos)
 
 @app.route('/categoria/labiales')
+@app.route('/categoria/labiales')
 def labiales():
+    productos = Product.query.filter_by(type='labiales').all()
     productos = Product.query.filter_by(type='labiales').all()
     return render_template('labiales.html', products=productos)
 
 @app.route('/categoria/brochas')
+@app.route('/categoria/brochas')
 def brochas():
+    productos = Product.query.filter_by(type='brochas').all()
     productos = Product.query.filter_by(type='brochas').all()
     return render_template('brochas.html', products=productos)
 
 @app.route('/categoria/pestaninas')
+@app.route('/categoria/pestaninas')
 def pestaninas():
+    productos = Product.query.filter_by(type='pestañinas').all()
     productos = Product.query.filter_by(type='pestañinas').all()
     return render_template('pestaninas.html', products=productos)
 
 @app.route('/categoria/rubores')
+@app.route('/categoria/rubores')
 def rubores():
+    productos = Product.query.filter_by(type='rubores').all()
     productos = Product.query.filter_by(type='rubores').all()
     return render_template('rubores.html', products=productos)
 
+@app.route('/categoria/cuidado_capilar')
 @app.route('/categoria/cuidado_capilar')
 def cuidado_capilar():
     productos = Product.query.filter_by(type='cuidado_capilar').all()
     return render_template('cuidado_capilar.html', products=productos)
 
 @app.route('/categoria/correctores')
+@app.route('/categoria/correctores')
 def correctores():
+    productos = Product.query.filter_by(type='correctores').all()
     productos = Product.query.filter_by(type='correctores').all()
     return render_template('correctores.html', products=productos)
 # Rutas de páginas estáticas
@@ -180,21 +212,38 @@ def popular():
     return render_template('popular.html')
 
 @app.route('/ofertas')
+@app.route('/ofertas')
 def ofertas():
     return render_template('ofertas.html')
 
+@app.route('/envios')
 @app.route('/envios')
 def envios():
     return render_template('envios.html')
 
 @app.route('/contacto')
+@app.route('/contacto')
 def contacto():
     return render_template('contacto.html')
 
 @app.route('/categoria/<nombre>')
+@app.route('/categoria/<nombre>')
 def categoria(nombre):
     productos = Product.query.filter_by(type=nombre).all()
     return render_template('categoria.html', categoria=nombre, products=productos)
+
+
+@app.route('/eliminar_producto/<int:producto_id>', methods=['POST'])
+def eliminar_producto(producto_id):
+    p = Product.query.get_or_404(producto_id)
+    # borrar archivo si existe
+    if p.image_url:
+        f = p.image_url.lstrip('/')
+        if os.path.exists(f):
+            os.remove(f)
+    db.session.delete(p)
+    db.session.commit()
+    return redirect(request.referrer or url_for('index'))
 
 @app.route('/agregar_producto', methods=['GET', 'POST'])
 def agregar_producto():
@@ -224,21 +273,12 @@ def agregar_producto():
 
     return render_template('agregar_producto.html')
 
-@app.route('/eliminar_producto/<int:producto_id>', methods=['POST'])
-def eliminar_producto(producto_id):
-    p = Product.query.get_or_404(producto_id)
-    # borrar archivo si existe
-    if p.image_url:
-        f = p.image_url.lstrip('/')
-        if os.path.exists(f):
-            os.remove(f)
-    db.session.delete(p)
-    db.session.commit()
-    return redirect(request.referrer or url_for('index'))
 
 if __name__ == '__main__':
+    
     
     # Crear tablas si no existen
     with app.app_context():
         db.create_all()
+    app.run(host='127.0.0.1', port=5000, debug=True)
     app.run(host='127.0.0.1', port=5000, debug=True)
