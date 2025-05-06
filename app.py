@@ -6,24 +6,8 @@ from werkzeug.utils import secure_filename
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from models import User  # o desde donde tengas el modelo importado
 from models import db, Product
-from ubicaciones import cobertura
+from myshop.ubicaciones import cobertura
 from flask_dance.contrib.google import make_google_blueprint, google
-
-
-departamentos = cobertura["departamentos"]
-municipios = cobertura["municipios"]
-
-load_dotenv()
-ADMIN_MODE = os.environ.get('ADMIN_MODE', 'False') == 'True'
-print("ADMIN_MODE:", ADMIN_MODE)
-from dotenv import load_dotenv
-from werkzeug.utils import secure_filename
-from flask_login import LoginManager, login_user, logout_user, current_user, login_required
-from models import User  # o desde donde tengas el modelo importado
-from models import db, Product
-from ubicaciones import cobertura
-from flask_dance.contrib.google import make_google_blueprint, google
-
 
 departamentos = cobertura["departamentos"]
 municipios = cobertura["municipios"]
@@ -42,7 +26,7 @@ app.config.from_mapping(
     GOOGLE_OAUTH_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID"), 
     GOOGLE_OAUTH_CLIENT_SECRET= os.getenv("GOOGLE_CLIENT_SECRET")
 )
-#ASEGURAMOS DE QUE EXISTA LA CARPETA
+# ASEGURAMOS DE QUE EXISTA LA CARPETA
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # Inicialización de extensiones IMPORTAR MODELOS Y DB
@@ -52,7 +36,6 @@ migrate = Migrate(app, db)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'index'
-
 
 google_bp = make_google_blueprint(
     client_id=os.getenv("GOOGLE_OAUTH_CLIENT_ID"),
@@ -65,7 +48,8 @@ app.register_blueprint(google_bp, url_prefix="/login")
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-@app.route('/login', methods=['POST'])# Boton de usuario
+
+@app.route('/login', methods=['POST'])  # Botón de usuario
 def login():
     email = request.form.get('email')
     password = request.form.get('password')
@@ -78,7 +62,7 @@ def login():
     else:
         flash('Correo o contraseña incorrectos', 'danger')
         return redirect(url_for('index'))
-    
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -98,7 +82,6 @@ def register():
             return redirect(url_for('register'))
 
         new_user = User(email=email, is_admin=False, phone=phone)
-        new_user = User(email=email, is_admin=False)
         new_user.set_password(password)
         db.session.add(new_user)
         db.session.commit()
@@ -149,89 +132,70 @@ def admin_users():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
 # Ruta principal: lista todos los productos
 @app.route('/')
-@app.route('/')
 def index():
-    productos = Product.query.all()  
-    return render_template('index.html', productos=productos)
     productos = Product.query.all()  
     return render_template('index.html', productos=productos)
 
 # Rutas de categorías de productos
 @app.route('/categoria/bases')
-@app.route('/categoria/bases')
 def bases():
-    productos = Product.query.filter_by(type='bases').all()
     productos = Product.query.filter_by(type='bases').all()
     return render_template('bases.html', products=productos)
 
 @app.route('/categoria/labiales')
-@app.route('/categoria/labiales')
 def labiales():
-    productos = Product.query.filter_by(type='labiales').all()
     productos = Product.query.filter_by(type='labiales').all()
     return render_template('labiales.html', products=productos)
 
 @app.route('/categoria/brochas')
-@app.route('/categoria/brochas')
 def brochas():
-    productos = Product.query.filter_by(type='brochas').all()
     productos = Product.query.filter_by(type='brochas').all()
     return render_template('brochas.html', products=productos)
 
 @app.route('/categoria/pestaninas')
-@app.route('/categoria/pestaninas')
 def pestaninas():
-    productos = Product.query.filter_by(type='pestañinas').all()
     productos = Product.query.filter_by(type='pestañinas').all()
     return render_template('pestaninas.html', products=productos)
 
 @app.route('/categoria/rubores')
-@app.route('/categoria/rubores')
 def rubores():
-    productos = Product.query.filter_by(type='rubores').all()
     productos = Product.query.filter_by(type='rubores').all()
     return render_template('rubores.html', products=productos)
 
-@app.route('/categoria/cuidado_capilar')
 @app.route('/categoria/cuidado_capilar')
 def cuidado_capilar():
     productos = Product.query.filter_by(type='cuidado_capilar').all()
     return render_template('cuidado_capilar.html', products=productos)
 
 @app.route('/categoria/correctores')
-@app.route('/categoria/correctores')
 def correctores():
     productos = Product.query.filter_by(type='correctores').all()
-    productos = Product.query.filter_by(type='correctores').all()
     return render_template('correctores.html', products=productos)
+
 # Rutas de páginas estáticas
 @app.route('/popular')
 def popular():
     return render_template('popular.html')
 
 @app.route('/ofertas')
-@app.route('/ofertas')
 def ofertas():
     return render_template('ofertas.html')
 
-@app.route('/envios')
 @app.route('/envios')
 def envios():
     return render_template('envios.html')
 
 @app.route('/contacto')
-@app.route('/contacto')
 def contacto():
     return render_template('contacto.html')
 
 @app.route('/categoria/<nombre>')
-@app.route('/categoria/<nombre>')
 def categoria(nombre):
     productos = Product.query.filter_by(type=nombre).all()
     return render_template('categoria.html', categoria=nombre, products=productos)
-
 
 @app.route('/eliminar_producto/<int:producto_id>', methods=['POST'])
 def eliminar_producto(producto_id):
@@ -273,12 +237,8 @@ def agregar_producto():
 
     return render_template('agregar_producto.html')
 
-
 if __name__ == '__main__':
-    
-    
     # Crear tablas si no existen
     with app.app_context():
         db.create_all()
-    app.run(host='127.0.0.1', port=5000, debug=True)
     app.run(host='127.0.0.1', port=5000, debug=True)

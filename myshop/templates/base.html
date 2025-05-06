@@ -23,20 +23,20 @@
   <!-- ========== ENCABEZADO COMÚN ========== -->
   <header class="top-bar">
     <div class="top-row">
-      <a href="{{ url_for('index') }}">
+      <a href="{{ url_for('main.index') }}">
         <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" class="logo">
       </a>
       <h1 class="site-title">Bienvenido a Jain</h1>
       <div class="search-area">
         <select onchange="if(this.value) window.location.href=this.value">
           <option value="">Todos</option>>
-            <option value="{{ url_for('brochas') }}">Brochas</option>
-            <option value="{{ url_for('labiales') }}">Labiales</option>
-            <option value="{{ url_for('pestaninas') }}">Pestañinas</option>
-            <option value="{{ url_for('rubores') }}">Rubores</option>
-            <option value="{{ url_for('cuidado_capilar') }}">Cuidado capilar</option>
-            <option value="{{ url_for('bases') }}">Bases</option>
-            <option value="{{ url_for('correctores') }}">Correctores</option>
+          <option value="{{ url_for('products.by_type', tipo='brochas') }}">Brochas</option>      
+          <option value="{{ url_for('products.by_type', tipo='labiales') }}">Labiales</option>    
+          <option value="{{ url_for('products.by_type', tipo='pestañinas') }}">Pestañinas</option>
+          <option value="{{ url_for('products.by_type', tipo='rubores') }}">Rubores</option>      
+          <option value="{{ url_for('products.by_type', tipo='cuidado_capilar') }}">Cuidado capilar</option>
+          <option value="{{ url_for('products.by_type', tipo='bases') }}">Bases</option>          
+          <option value="{{ url_for('products.by_type', tipo='correctores') }}">Correctores</option>
         </select>
           <input type="text" placeholder="Buscar en JainBeauty">
           <button type="submit">
@@ -66,7 +66,7 @@
           </button>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
             <li>
-              <a class="dropdown-item" href="{{ url_for('logout') }}">Cerrar sesión</a>
+              <a class="dropdown-item" href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
             </li>
           </ul>
         </div>
@@ -78,14 +78,15 @@
     <nav class="bottom-nav">
       <!-- Ajustamos los enlaces para que lleven a sus rutas -->
       <a href="#">☰ CATEGORIA</a>
-      <a href="{{ url_for('popular') }}">Popular</a>
-      <a href="{{ url_for('ofertas') }}">Ofertas del Día</a>
-      <a href="{{ url_for('envios') }}">Tipos de Envíos</a>
-      <a href="{{ url_for('contacto') }}">Contactanos</a>
+      <a href="#">☰ CATEGORIA</a>
+      <a href="{{ url_for('main.popular') }}">Popular</a>          
+      <a href="{{ url_for('main.ofertas') }}">Ofertas del Día</a>  
+      <a href="{{ url_for('main.envios') }}">Tipos de Envíos</a>    
+      <a href="{{ url_for('main.contacto') }}">Contáctanos</a> 
     </nav>
   {% if current_user.is_authenticated and current_user.is_admin %}
   <nav class="admin-nav text-center py-2 bg-light">
-    <a href="{{ url_for('admin_users') }}" class="me-3">👥 Ver usuarios</a>
+    <a href="{{ url_for('auth.admin_users') }}" class="me-3">👥 Ver usuarios</a>
     <!-- más links admin aquí… -->
   </nav>
   {% endif %}
@@ -98,7 +99,7 @@
       <span class="close">&times;</span>
       <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Manga 1">
       <h2>Bienvenido de nuevo!</h2>
-      <form method="POST" action="{{ url_for('login') }}">
+      <form method="POST" action="{{ url_for('auth.login') }}">
         <input type="email" name="email" placeholder="Correo" required>
         <input type="password" name="password" placeholder="Contraseña" required>
         <div class="options">
@@ -107,7 +108,7 @@
         </div>
         <div class="botones-auth d-flex justify-content-between mt-3">
           <button type="submit" class="btn-auth btn-login me-2 w-50">Login</button>
-          <a href="{{ url_for('register') }}" class="btn btn-outline-secondary w-50 ms-2">
+          <a href="{{ url_for('auth.register') }}" class="btn btn-outline-secondary w-50 ms-2">
             Registrarse
           </a>
         </div>

@@ -9,3 +9,12 @@ class Config:
         or 'sqlite:///' + os.path.join(basedir, 'productos.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = os.path.join(basedir, 'static/uploads')
+
+class DevelopmentConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URL')
+
+def create_app(config_class=DevelopmentConfig):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+    # init ext, register blueprints…
+    return app
