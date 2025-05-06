@@ -14,6 +14,7 @@ mi_sitio.git/
 # Migraciones generadas automáticamente
 migrations/versions/
 
+git-filter-repo/
 # Archivos de editor y sistema
 .vscode/
 .idea/
