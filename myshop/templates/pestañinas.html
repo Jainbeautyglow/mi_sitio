@@ -28,7 +28,7 @@
 
   {% if current_user.is_authenticated and current_user.is_admin %}
     <div class="admin-bar">
-      <a href="{{ url_for('products.agregar_producto') }}" class="admin-button">
+      <a href="{{ url_for('products.agregar') }}" class="admin-button">
         ➕ Agregar nuevo labial
       </a>
     </div>

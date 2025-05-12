@@ -41,6 +41,6 @@
 
     
     {% if current_user.is_authenticated and current_user.is_admin %}
-    <a href="{{ url_for('products.agregar_producto') }}" class="btn-agregar">Agregar producto</a>
-  {% endif %}
+  <a href="{{ url_for('products.agregar') }}" class="btn-agregar">Agregar producto</a>
+{% endif %}
 {% endblock %}
