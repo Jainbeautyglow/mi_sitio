@@ -6,11 +6,22 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_dance.contrib.google import make_google_blueprint
 from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
 from .models import db, User
 from .config import ProductionConfig
 
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True
+)
+
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
+
+
 
 def create_app():
     load_dotenv()
