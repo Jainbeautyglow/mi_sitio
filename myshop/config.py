@@ -18,9 +18,3 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URL')
 
-def create_app(config_class=DevelopmentConfig):
-    app = Flask(__name__)
-    app.config.from_object('myshop.config.ProductionConfig')
-    # init ext, register blueprints…
-    
-    return app

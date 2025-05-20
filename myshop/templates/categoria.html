@@ -3,14 +3,32 @@
 {% block title %}Categoría: {{ categoria }}{% endblock %}
 
 {% block content %}
-  <h2>Productos en la categoría: {{ categoria }}</h2>
-  <ul>
-    {% for product in products %}
-    <div>
-        <img src="{{ product.image_url }}" alt="{{ product.name }}" width="150">
-        <h3>{{ product.name }}</h3>
-        <p>{{ product.price }} USD</p>
-    </div>
-{% endfor %}
-  </ul>
+  <h2 class="section-title">Productos en “{{ categoria }}”</h2>
+
+  <div class="contenedor-productos">
+    {% for producto in products %}
+      <div class="producto-card">
+        <img src="{{ producto.image_url }}" 
+             alt="{{ producto.name }}" 
+             class="producto-card__img">
+        <div class="producto-card__info">
+          <h3 class="producto-card__name">{{ producto.name }}</h3>
+          <p class="producto-card__price">${{ "%.2f"|format(producto.price) }} USD</p>
+          <p class="producto-card__desc">
+            {{ producto.description or 'Sin descripción' }}
+          </p>
+          {% if current_user.is_authenticated and current_user.is_admin %}
+            <form action="{{ url_for('products.eliminar', producto_id=producto.id) }}"
+                  method="POST"
+                  class="producto-card__actions"
+                  onsubmit="return confirm('¿Eliminar este producto?');">
+              <button type="submit" class="btn-eliminar">🗑️ Eliminar</button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    {% else %}
+      <p>No hay productos cargados en esta categoría.</p>
+    {% endfor %}
+  </div>
 {% endblock %}

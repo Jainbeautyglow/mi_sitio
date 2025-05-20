@@ -1,5 +1,6 @@
 # myshop/main/routes.py
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import current_user
 from myshop.models import Product
 import os
 
@@ -7,6 +8,8 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
+    print("Usuario actual:", current_user)
+    print("¿Autenticado?", current_user.is_authenticated)
     productos = Product.query.all()
     return render_template('index.html', productos=productos)
 

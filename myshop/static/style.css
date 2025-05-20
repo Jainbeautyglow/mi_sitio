@@ -378,7 +378,7 @@ header img {
 .modal *,
 .modal-content *{
   max-width: 100%;
-  box-sizing: box;
+  box-sizing: border box;
 }
 .modal-content {
   display: flex;
@@ -564,6 +564,25 @@ header img {
   background-color: #d4cd00;
 }
 
+.btn {             /* ESTILO CERRAR SESION */
+    display: inline-block;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.btn-success {        
+    background-color: green;
+    color: white;
+}
+
+.btn-outline-danger {
+    border: 1px solid red;
+    color: red;
+    background: white;          /* ESTILO CERRAR SESION */
+}
+ 
 /* Registrarse */
 .btn-registrarse {
   background-color: #ffffff;
@@ -691,28 +710,30 @@ header img {
 
 /* Contenedor de tarjetas de productos */
 .contenedor-productos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  /* estos tres */
-  margin: 2rem auto;     /* 2rem arriba/abajo, y auto a los lados centran el <div> */
-  max-width: 1200px;     /* no más ancho que esto */
-  padding: 0 1rem;       /* respiración en los laterales */
+  display: grid;
+  /* Crea columnas de al menos 200px y que se ajusten al contenedor */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;            /* espacio entre tarjetas */
+  margin: 2rem auto;
+  max-width: 1200px;
+  padding: 0 1rem;
+
 }
 
-/* Cada tarjeta */
-/* 2) Haz que cada “card” respete un ancho fijo sin salirse */
 .producto-card {
-  width: 200px;
-  border-radius: 16px;
+  /* ya no necesitas margin aquí */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  background-color: white;
-  margin: 10px auto;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: grid;
+  flex-direction: column;
+  transition: transform 0.2s;
 }
+
 .producto-card:hover {
-  box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+  transform: scale(1.02);
 }
 
 /* Imagen fija dentro de la tarjeta */
@@ -737,7 +758,7 @@ header img {
 }
 .producto-card__name {
   margin: .5rem 0 .25rem;
-  font-size: 1rem;
+  font-weight: bold;
   color: #cb8587;
 }
 .producto-card__price {

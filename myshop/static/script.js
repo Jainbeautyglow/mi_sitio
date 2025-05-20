@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("userIcon:", userIcon);
   console.log("loginBtn:", loginBtn);
 
+
+  
   function openModal() {
     modal.style.display = "flex";
   }
@@ -22,3 +24,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.target === modal) modal.style.display = "none";
   });
 });
+
+const form = document.getElementById('loginForm');
+if (form) {
+  form.addEventListener('submit', e => {
+    console.log('📝 Submitting login form…');
+  });
+}

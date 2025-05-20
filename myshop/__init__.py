@@ -4,10 +4,12 @@ import os
 from flask import Flask
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_login import login_user
 from flask_dance.contrib.google import make_google_blueprint
 from dotenv import load_dotenv
 import cloudinary
 import cloudinary.uploader
+from .products.routes import products
 from .models import db, User
 from .config import ProductionConfig
 
@@ -23,11 +25,11 @@ login_manager.login_view = 'auth.login'
 
 
 
+
 def create_app():
     load_dotenv()
     print(f"GOOGLE_OAUTH_CLIENT_ID: {os.getenv('GOOGLE_OAUTH_CLIENT_ID')}")
     print(f"GOOGLE_OAUTH_CLIENT_SECRET: {os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')}")
-
     app = Flask(__name__, template_folder='templates', static_folder='static')
 
     app.config.from_object('myshop.config.ProductionConfig')
@@ -62,6 +64,6 @@ def create_app():
 
     app.register_blueprint(auth,     url_prefix="/auth")
     app.register_blueprint(main)               # rutas “/”, “/popular”, etc.
-    app.register_blueprint(products, url_prefix="/categoria")
+    app.register_blueprint(products, url_prefix='/productos')
 
     return app

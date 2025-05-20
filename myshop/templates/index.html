@@ -4,43 +4,44 @@
 {% block title %}Mi Tienda - Inicio{% endblock %}
 
 {% block content %}
+        {% if current_user.is_admin %}
+            <div style="text-align: right; margin: 10px;">
+                <a href="{{ url_for('products.agregar') }}" class="btn btn-success">➕ Agregar producto</a>
+            </div>
+        {% endif %}
+    <h2>Lista de productos</h2>
+    <section class="categorias">
+        <h2>Categorías</h2>
+        <div class="contenedor-categorias">
+            <a href="{{ url_for('main.categoria', nombre='brochas') }}" class="categoria">
+                <img src="{{ url_for('static', filename='img/brochas.jpg') }}" alt="Brochas">
+                <h3>Brochas</h3>
+            </a>
+            <a href="{{ url_for('main.categoria', nombre='labiales') }}" class="categoria">
+                <img src="{{ url_for('static', filename='img/labiales.jpg') }}" alt="Labiales">
+                <h3>Labiales</h3>
+            </a>
+            <a href="{{ url_for('main.categoria', nombre='rubores') }}" class="categoria">
+                <img src="{{ url_for('static', filename='img/rubores.jpg') }}" alt="Rubores">
+                <h3>Rubores</h3>
+            </a>
+            <a href="{{ url_for('main.categoria', nombre='pestañinas') }}" class="categoria">
+                <img src="{{ url_for('static', filename='img/pestañinas.jpg') }}" alt="Pestañinas">
+                <h3>Pestañinas</h3>
+            </a>
+            <a href="{{ url_for('main.categoria', nombre='bases') }}" class="categoria">
+                <img src="{{ url_for('static', filename='img/bases.jpg') }}" alt="Bases">
+                <h3>Bases</h3>
+            </a>
+            <a href="{{ url_for('main.categoria', nombre='Correctores') }}" class="categoria">
+                <img src="{{ url_for('static', filename='img/correctores.jpg') }}" alt="Correctores">
+                <h3>Correctores</h3>
+            </a>
+            <a href="{{ url_for('main.categoria', nombre='cuidado capilar') }}" class="categoria">
+                <img src="{{ url_for('static', filename='img/cuidado capilar.jpg') }}" alt="Cuidado Capilar">
+                <h3>Cuidado Capilar</h3>
+            </a>
+        </div>
+    </section>
 
-<h2>Lista de productos</h2>
-  <section class="categorias">
-    <h2>Categorías</h2>
-    <div class="contenedor-categorias">
-      <a href="{{ url_for('main.categoria', nombre='brochas') }}" class="categoria">
-        <img src="{{ url_for('static', filename='img/brochas.jpg') }}" alt="Brochas">
-        <h3>Brochas</h3>
-      </a>
-      <a href="{{ url_for('main.categoria', nombre='labiales') }}" class="categoria">
-        <img src="{{ url_for('static', filename='img/labiales.jpg') }}" alt="Labiales">
-        <h3>Labiales</h3>
-      </a>
-      <a href="{{ url_for('main.categoria', nombre='rubores') }}" class="categoria">
-        <img src="{{ url_for('static', filename='img/rubores.jpg') }}" alt="Rubores">
-        <h3>Rubores</h3>
-      </a>
-      <a href="{{ url_for('main.categoria', nombre='pestañinas') }}" class="categoria">
-        <img src="{{ url_for('static', filename='img/pestañinas.jpg') }}" alt="Pestañinas">
-        <h3>Pestañinas</h3>
-      </a>
-      <a href="{{ url_for('main.categoria', nombre='bases') }}" class="categoria">
-        <img src="{{ url_for('static', filename='img/bases.jpg') }}" alt="Bases">
-        <h3>Bases</h3>
-      </a>
-      <a href="{{ url_for('main.categoria', nombre='Correctores') }}" class="categoria">
-        <img src="{{ url_for('static', filename='img/correctores.jpg') }}" alt="Correctores">
-        <h3>Correctores</h3>
-      </a>
-      <a href="{{ url_for('main.categoria', nombre='cuidado capilar') }}" class="categoria">
-        <img src="{{ url_for('static', filename='img/cuidado capilar.jpg') }}" alt="Cuidado Capilar">
-        <h3>Cuidado Capilar</h3>
-      </a>
-    </div>
-
-    
-    {% if current_user.is_authenticated and current_user.is_admin %}
-  <a href="{{ url_for('products.agregar') }}" class="btn-agregar">Agregar producto</a>
-{% endif %}
 {% endblock %}

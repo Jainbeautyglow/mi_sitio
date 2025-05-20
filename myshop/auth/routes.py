@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.utils import secure_filename
 from flask_dance.contrib.google import google
+from flask_login import login_user
 
 from myshop.models import db, User, Product
 from myshop.ubicaciones import cobertura
@@ -45,6 +46,8 @@ def register():
 def login():
     email = request.form.get('email')
     password = request.form.get('password')
+    print("Email recibido:", email)
+    print("Contraseña recibida:", password)
     user = User.query.filter_by(email=email).first()
 
     if user and user.check_password(password):
@@ -59,6 +62,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash("Has cerrado sesión", "info")
     return redirect(url_for('main.index'))
 
 @auth.route('/google_login')
